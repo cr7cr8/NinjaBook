@@ -7,21 +7,30 @@ export const bookReducer = (state, paramObj) => {
 
     if (paramObj.type === "addBook") {
 
-        return [...state, { title: paramObj.book.title, author: paramObj.book.author , id: Date.now() }]
+        return [...state, { title: paramObj.book.title, author: paramObj.book.author, id: Date.now() }]
 
     }
 
     else if (paramObj.type === "removeBook") {
 
-        return state.filter((book=>{
-            return book.id!==paramObj.id
+        return state.filter((book => {
+            return book.id !== paramObj.id
         }))
     }
+    else if (paramObj.type === "removeLocalStorage") {
+
+        localStorage.removeItem("books")
+        alert("lcoal storage removed !")
+
+        return state
+    }
+
+
     else {
         return state
     }
 
-  
+
 
 
 
