@@ -18,8 +18,6 @@ const App = (props) => {
 
       <BookContextProvider>
         <Navbar />
-
-   
         <BookList />
       </BookContextProvider>
 

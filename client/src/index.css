@@ -34,13 +34,11 @@ body {
   background: #6d3d6d;
   border-radius: 4px;
   padding: 10px;
-  cursor: pointer;
   margin: 10px 0;
 }
-.book-list li:hover{
-  opacity: 0.7;
-  text-decoration: line-through;
-}
+
+
+
 .book-list .title{
   font-weight: bold;
   color: #fff;
@@ -73,4 +71,15 @@ input[type='submit']{
   border: 0;
   padding: 6px 20px;
   display: block;
+}
+
+.deleteBtn {
+
+  background: #eee;
+  border: 0;
+  float: right;
+   cursor: pointer;
+  /* padding: 6px 20px; */
+   display: block; 
+
 }

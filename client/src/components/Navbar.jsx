@@ -12,7 +12,7 @@ const Navbar = (props) => {
                 <h1>Ninja Reading List...</h1>
                 <p>Currently you have {books.length} books to get through...</p>
 
-                <button onClick={dispatch.bind(null,{type:"removeLocalStorage"})}>remove Local storge</button>
+                <input type="submit" value="Default" onClick={dispatch.bind(null,{type:"removeLocalStorage"})}/>
 
 
                 {/*(function(){return [1,2,3,4,5]}())*/}
