@@ -8,24 +8,16 @@ export const ThemeContext = createContext()
 const ThemeContextProvider = (props) => {
 
 
+    const reducer = (state,paramObj)=>{
+        
+        if (paramObj.type === "addBook") {  return {...state}  }
+        else{ return state }
+           
+    }
 
-
-    // const [books, dispatch] = useReducer(
-    //     bookReducer,
-    //     JSON.parse(localStorage.getItem("books")) ||
-    //     [{ title: "name of the wind", author: "Patrick rothfuss", id: 1 },
-    //     { title: "the way of kings", author: "brande sandera", id: 2 },
-    //     { title: "the final empire", author: "jillk huss", id: 3 },
-    //     { title: "the hero of ages", author: "snelck dussbd", id: 4 }
-    //     ]
-    // )
-
-
-    // useEffect(() => {
-
-    //     localStorage.setItem("books", JSON.stringify(books))
-
-    // }, [books])
+    const [state, dispatch] = useReducer(  reducer, {/* initialState Object */}  )
+    
+    useEffect(() => {  }, [/* call effect funtion based on the passed in state change */])
 
 
     return (

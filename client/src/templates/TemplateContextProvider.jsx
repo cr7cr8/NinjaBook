@@ -8,10 +8,10 @@ export const TemplateContext = createContext()
 const TemplateContextProvider = (props) => {
 
 
-    const reducer = (contextState,paramObj)=>{
+    const reducer = (state,paramObj)=>{
         
-        if (paramObj.methodName === "addBook") {  return {...contextState}  }
-        else{ return contextState }
+        if (paramObj.type === "addBook") {  return {...state}  }
+        else{ return state }
            
     }
 
