@@ -25,6 +25,7 @@ body {
 
 .book-list{
   margin: 20px;
+  
 }
 .book-list ul{
   padding: 0;
@@ -71,6 +72,7 @@ input[type='submit']{
   border: 0;
   padding: 6px 20px;
   display: block;
+  border-radius: 4px;
 }
 
 .deleteBtn {
@@ -78,8 +80,10 @@ input[type='submit']{
   background: #eee;
   border: 0;
   float: right;
-   cursor: pointer;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 1px 1px 10px 3px  rgb(54, 7, 40);
   /* padding: 6px 20px; */
-   display: block; 
-
+   /* display: block;  */
+   
 }

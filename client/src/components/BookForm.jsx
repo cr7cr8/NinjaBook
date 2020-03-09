@@ -28,8 +28,8 @@ const BookForm = (props) => {
 
 
         <form onSubmit={handleSubmit}>
-            <input type="text" value={title} onChange={(e) => { setTitle(e.currentTarget.value) }} required></input>
-            <input type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} required></input>
+            <input placeholder="title"  type="text" value={title} onChange={(e) => { setTitle(e.currentTarget.value) }} required></input>
+            <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} required></input>
             <input type="submit" value="Add Book"/>
         </form>
 

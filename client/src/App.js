@@ -7,6 +7,7 @@ import BookContextProvider from './contexts/BookContextProvider';
 import BookList from './components/BookList';
 import Navbar from './components/Navbar';
 import BookDetails from './components/BookDetails';
+import LoginForm from './components/LoginForm';
 
 
 
@@ -15,6 +16,7 @@ const App = (props) => {
 
     <div className="App">
 
+      <LoginForm />
 
       <BookContextProvider>
         <Navbar />

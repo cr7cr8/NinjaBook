@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, /*useState*/ } from 'react';
 import { BookContext } from '../contexts/BookContextProvider'
 
 const BookDetails = ({ book }) => {
@@ -6,31 +6,50 @@ const BookDetails = ({ book }) => {
 
     const { dispatch } = useContext(BookContext)
 
- 
+    // const [{useOut,mouseEnter,mouseOut}, setPanalStyle] = useState({
+
+    //     useOut:true,
+    //     mouseEnter: {
+    //         opacity: 0.7,
+    //         textDecoration: "line-through"
+    //     },
+
+    //     mouseOut: {
+    //         opacity: 1,
+    //         textDecoration: "none"
+    //     }
+    // })
+
+
+
+
     return (
-        <div>
-            <li key={book.id} >
-            <button className="deleteBtn"
+    
+           
+            <li>
+                <button className="deleteBtn"
 
-onClick={() => { dispatch({ type: "removeBook", id: book.id }) }}
+                    onClick={() => { dispatch({ type: "removeBook", id: book.id }) }}
 
-onMouseEnter={(e) => { e.currentTarget.parentNode.parentNode.style="opacity:0.7;  text-decoration: line-through;" }}
+                    // onMouseEnter={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
+                    // onMouseOut={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
 
-onMouseOut={(e) => { e.currentTarget.parentNode.parentNode.style="opacity:1;  text-decoration: noe;" }}
+                    onMouseEnter={(e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }}
+                    onMouseOut={(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }}
 
->
-delete
-</button>
+                >delete</button>
+
+
                 <div className="title">{book.title}  </div>
 
-                
-              
+
+
                 <div className="author">{book.author} </div>
 
 
             </li>
 
-        </div>
+        
 
 
     );

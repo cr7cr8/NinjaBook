@@ -13,15 +13,14 @@ const BookList = (props) => {
             <ul >
                 {
                     books.map(book => {
-                        return (     
-                            //  <li key={book.id}>{book.title}</li>
-                             <React.Fragment key={book.id}><BookDetails book={book} /></React.Fragment>
-                             )
+                        return (        
+                         <BookDetails {...{ key:book.id,book }}/*book={book}*/ />
+                        )
                     })
                 }
             </ul>
-      
-      <BookForm></BookForm>
+
+            <BookForm/>
         </div>
 
     );
