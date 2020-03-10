@@ -1,12 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Joi from 'joi-browser';
 
 
-const Form = ({ isRegisterForm = true }) => {
+const Form = (props) => {
+
+        console.log(props.location.pathname)
+
+
+    let isRegisterForm = props.isRegisterForm
 
 
     const [state, setState] = useState(
         {
+
+        
             format: ["text", "password", "password"],
 
             data: {
@@ -18,19 +25,28 @@ const Form = ({ isRegisterForm = true }) => {
         }
     )
 
-    const button = useRef();
+ 
+
+    // useMemo(function(){
+    //     setState({...state})
+
+    // },props.location)
+
     
+
+    const button = useRef();
     useEffect(() => {
+
         if (!isRegisterForm) {
             delete state.data.password2
             setState({ ...state })
         }
-  
+
         button.current.disabled = "true"
         button.current.value = isRegisterForm ? "Sign Up" : "Login"
 
     }, [])
-  
+
 
     const schema = {
         username: Joi.string().min(3).required().label("Username"),
@@ -85,6 +101,9 @@ const Form = ({ isRegisterForm = true }) => {
     return (
 
         <form onSubmit={doSubmit}>
+            <h1>{props.location.pathname}</h1>
+            <h1>{state.isin}</h1>
+            <h1>{props.location.history}</h1>
             {Object.keys(state.data).map((keyName, i) => {
 
                 return (

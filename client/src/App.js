@@ -4,9 +4,13 @@ import { Route, Switch } from 'react-router-dom';
 
 
 import BookContextProvider from './contexts/BookContextProvider';
-import BookList from './components/BookList/BookList';
+import BookList from './components/BookList';
 import Navbar from './components/Navbar';
-import Form from './components/Form';
+
+
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+
 
 
 
@@ -17,12 +21,33 @@ const App = (props) => {
 
       {/* <Form /> */}
 
+
+
+
+
+
       <BookContextProvider>
         <Navbar />
-        <BookList />
+
+        <Switch>
+
+      
+
+
+          {/* <Route path="/login" render={(props) => { return <Form {... { ...{ isRegisterForm: false }, ...props }} /> }} />
+          <Route path="/register" render={(props) => { return <Form isRegisterForm={true}  {...props} /> }} /> */}
+         
+      
+          <Route path="/login" render={(props) => { return <LoginForm {...props } /> }} />
+          <Route path="/register" render={(props) => { return <RegisterForm  {...props} /> }} /> 
+
+
+          <BookList />
+        </Switch>
+
       </BookContextProvider>
 
- 
+
 
     </div>
 

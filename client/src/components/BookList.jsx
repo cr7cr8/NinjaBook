@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { BookContext } from '../../contexts/BookContextProvider'
-import BookForm from './_BookList/BookForm';
-import BookDetails from './_BookList/BookDetails';
+import { BookContext } from '../contexts/BookContextProvider'
+import BookForm from './BookListTools/BookForm';
+import BookDetails from './BookListTools/BookDetails';
 
 const BookList = (props) => {
 
