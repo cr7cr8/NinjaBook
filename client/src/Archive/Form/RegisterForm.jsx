@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Joi from 'joi-browser'
-import Form from './Form';
+import Form from '../../components/Form';
 const RegisterForm = () => {
 
 

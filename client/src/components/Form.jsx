@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Joi from 'joi-browser';
 
 
@@ -7,6 +7,7 @@ const Form = ({ isRegisterForm = true }) => {
 
     const [state, setState] = useState(
         {
+            format:["text","password","password"],
 
             data: {
                 username: "",
@@ -15,18 +16,22 @@ const Form = ({ isRegisterForm = true }) => {
             },
 
             error: {
-                // username: "",
-                // password: "",
-                // password2: ""
+                //  username: "",
+                //  password: "",
+                //  password2: ""
             },
         }
     )
 
+    const button = useRef();
+   // const input2 = ueseRef();
     useEffect(() => {
         if (!isRegisterForm) {
             delete state.data.password2
             setState({ ...state })
         }
+        button.current.disabled = "true"
+        button.current.value = isRegisterForm ? "Sign Up" : "Login"
 
     }, [])
 
@@ -39,7 +44,7 @@ const Form = ({ isRegisterForm = true }) => {
     }
     const doSubmit = (e) => {
         e.preventDefault();
-        console.log("login")
+        console.log(isRegisterForm ? "Register" : "login")
 
     }
 
@@ -55,18 +60,18 @@ const Form = ({ isRegisterForm = true }) => {
             ? { ...state['error'], [e.currentTarget.name]: validateProperty(e) }
             : (function () { delete state['error'][e.currentTarget.name]; return state['error'] })()
 
-        // if (isRegisterForm && (e.currentTarget.name === "password")) {
-        //     if (!state['error']['password']) {
+        if (isRegisterForm && (e.currentTarget.name === "password")) {
+            if (!state['error']['password']) {
 
-        //         if (state['data']['password'] === state['data']['password2']) {
-        //             delete state['error']['password2']
-        //         }
-        //         else{
+                if (state['data']['password'] === state['data']['password2']) {
+                    delete state['error']['password2']
+                }
+                else {
 
-        //             state['error']['password2']="Two passwords are not matching"
-        //         }
-        //     }
-        // }
+                    state['error']['password2'] = "Two passwords are not matching"
+                }
+            }
+        }
 
         console.log(state.error)
         setState({ ...state })
@@ -98,13 +103,13 @@ const Form = ({ isRegisterForm = true }) => {
                     <div className="form-group" key={keyName}>
 
                         <label htmlFor={keyName}>{[...keyName,].shift().toLocaleUpperCase()}{keyName.substr(1)}</label>
-                        <input id={keyName} className="form-control" type="text" name={keyName} value={state['data'][keyName]} onChange={handleChange} />
+                        <input id={keyName} className="form-control" type={state.format[i]} name={keyName} value={state['data'][keyName]} onChange={handleChange} />
 
                         <div >{state['error'][keyName]}</div>
                     </div>
                 )
             })}
-            <div> <input disabled={Boolean(Object.keys(state.error).length)} type="submit" value={isRegisterForm?"Sign Up":"Login"}></input></div>
+            <div> <input ref={button} disabled={Boolean(Object.keys(state.error).length)} type="submit" ></input></div>
         </form >
 
 
