@@ -4,9 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 
 
 import BookContextProvider from './contexts/BookContextProvider';
-import BookList from './components/BookList';
+import BookList from './components/BookList/BookList';
 import Navbar from './components/Navbar';
-import BookDetails from './components/BookDetails';
 import Form from './components/Form';
 
 
@@ -23,7 +22,7 @@ const App = (props) => {
         <BookList />
       </BookContextProvider>
 
-
+ 
 
     </div>
 

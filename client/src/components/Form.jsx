@@ -7,34 +7,30 @@ const Form = ({ isRegisterForm = true }) => {
 
     const [state, setState] = useState(
         {
-            format:["text","password","password"],
+            format: ["text", "password", "password"],
 
             data: {
-                username: "",
-                password: "",
-                password2: "",
+                username: "", password: "", password2: "",
             },
 
-            error: {
-                //  username: "",
-                //  password: "",
-                //  password2: ""
+            error: {       //  username: "", password: "",  password2: ""
             },
         }
     )
 
     const button = useRef();
-   // const input2 = ueseRef();
+    
     useEffect(() => {
         if (!isRegisterForm) {
             delete state.data.password2
             setState({ ...state })
         }
+  
         button.current.disabled = "true"
         button.current.value = isRegisterForm ? "Sign Up" : "Login"
 
     }, [])
-
+  
 
     const schema = {
         username: Joi.string().min(3).required().label("Username"),
@@ -51,8 +47,6 @@ const Form = ({ isRegisterForm = true }) => {
 
     const handleChange = (e) => {
         // e.persist();
-
-
 
         state['data'][e.currentTarget.name] = e.currentTarget.value
 
@@ -88,13 +82,7 @@ const Form = ({ isRegisterForm = true }) => {
 
 
 
-
-
-
-
     return (
-
-
 
         <form onSubmit={doSubmit}>
             {Object.keys(state.data).map((keyName, i) => {
