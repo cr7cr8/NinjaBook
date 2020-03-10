@@ -10,7 +10,6 @@ export const bookReducer = (state, paramObj) => {
         return [...state, { title: paramObj.book.title, author: paramObj.book.author, id: Date.now() }]
 
     }
-
     else if (paramObj.type === "removeBook") {
 
         return state.filter((book => {
@@ -24,7 +23,7 @@ export const bookReducer = (state, paramObj) => {
 
         return state
     }
-
+  
 
     else {
         return state

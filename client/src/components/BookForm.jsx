@@ -15,12 +15,16 @@ const BookForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        dispatch({type:"addBook",book:{title,author,id:Date.now()}})
-       // addBook(title, author)
+      
+       
+            dispatch({ type: "addBook", book: { title, author:author||Date().substr(0,24), id: Date.now() } })
         
-        
-        setTitle("")
-        setAuthor("")
+
+
+
+
+          setTitle("")
+          setAuthor("")
     }
 
 
@@ -28,9 +32,10 @@ const BookForm = (props) => {
 
 
         <form onSubmit={handleSubmit}>
-            <input placeholder="title"  type="text" value={title} onChange={(e) => { setTitle(e.currentTarget.value) }} required></input>
-            <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} required></input>
-            <input type="submit" value="Add Book"/>
+            <input placeholder="title" type="text" value={title} onChange={(e) => { setTitle(e.currentTarget.value) }} required></input>
+            <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
+
+            <input type="submit" value="Add Book" />
         </form>
 
     );

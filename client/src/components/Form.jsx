@@ -55,18 +55,18 @@ const Form = ({ isRegisterForm = true }) => {
             ? { ...state['error'], [e.currentTarget.name]: validateProperty(e) }
             : (function () { delete state['error'][e.currentTarget.name]; return state['error'] })()
 
-        if (isRegisterForm && (e.currentTarget.name === "password")) {
-            if (!state['error']['password']) {
+        // if (isRegisterForm && (e.currentTarget.name === "password")) {
+        //     if (!state['error']['password']) {
 
-                if (state['data']['password'] === state['data']['password2']) {
-                    delete state['error']['password2']
-                }
-                else{
+        //         if (state['data']['password'] === state['data']['password2']) {
+        //             delete state['error']['password2']
+        //         }
+        //         else{
 
-                    state['error']['password2']="Two passwords are not matching"
-                }
-            }
-        }
+        //             state['error']['password2']="Two passwords are not matching"
+        //         }
+        //     }
+        // }
 
         console.log(state.error)
         setState({ ...state })
@@ -104,7 +104,7 @@ const Form = ({ isRegisterForm = true }) => {
                     </div>
                 )
             })}
-            <div> <input disabled={Boolean(Object.keys(state.error).length)} type="submit" value="submit"></input></div>
+            <div> <input disabled={Boolean(Object.keys(state.error).length)} type="submit" value={isRegisterForm?"Sign Up":"Login"}></input></div>
         </form >
 
 
