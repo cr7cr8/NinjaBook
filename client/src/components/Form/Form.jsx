@@ -4,7 +4,7 @@ import Joi from 'joi-browser';
 
 const Form = (props) => {
 
-        console.log(props.location.pathname)
+    console.log(props.location.pathname)
 
 
     let isRegisterForm = props.isRegisterForm
@@ -13,37 +13,40 @@ const Form = (props) => {
     const [state, setState] = useState(
         {
 
-        
+
             format: ["text", "password", "password"],
 
             data: {
                 username: "", password: "", password2: "",
             },
 
-            error: {       //  username: "", password: "",  password2: ""
+            error: {
+                username: "", password: "", password2: ""
             },
         }
     )
 
- 
+
 
     // useMemo(function(){
     //     setState({...state})
 
     // },props.location)
 
-    
+
 
     const button = useRef();
     useEffect(() => {
 
         if (!isRegisterForm) {
             delete state.data.password2
+            delete state.error.password2
+            state.format.pop()
             setState({ ...state })
         }
 
-        button.current.disabled = "true"
-        button.current.value = isRegisterForm ? "Sign Up" : "Login"
+        //   button.current.disabled = "true"
+        //   button.current.value = isRegisterForm ? "Sign Up" : "Login"
 
     }, [])
 
@@ -101,9 +104,8 @@ const Form = (props) => {
     return (
 
         <form onSubmit={doSubmit}>
-            <h1>{props.location.pathname}</h1>
-            <h1>{state.isin}</h1>
-            <h1>{props.location.history}</h1>
+
+
             {Object.keys(state.data).map((keyName, i) => {
 
                 return (
@@ -116,7 +118,13 @@ const Form = (props) => {
                     </div>
                 )
             })}
-            <div> <input ref={button} disabled={Boolean(Object.keys(state.error).length)} type="submit" ></input></div>
+            <div>
+                <input ref={button} 
+                type="submit"
+                 disabled={Boolean(Object.keys(state.error).length)} 
+                 value={isRegisterForm ? "Regist" : "Login"
+                } />
+            </div>
         </form >
 
 

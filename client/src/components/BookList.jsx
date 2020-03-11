@@ -8,14 +8,10 @@ const BookList = (props) => {
     const { books } = useContext(BookContext)
 
     books.sort(
-        function(a,b){
-            if(a.id>=b.id){
-                return -1
-            }
-            else{
-                return 1
-            }
-
+        function(a,b){  
+            
+            return a.id>=b.id?-1:1
+            
         }
     )
     

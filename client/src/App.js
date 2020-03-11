@@ -19,12 +19,6 @@ const App = (props) => {
 
     <div className="App">
 
-      {/* <Form /> */}
-
-
-
-
-
 
       <BookContextProvider>
         <Navbar />
@@ -32,8 +26,6 @@ const App = (props) => {
         <Switch>
 
       
-
-
           {/* <Route path="/login" render={(props) => { return <Form {... { ...{ isRegisterForm: false }, ...props }} /> }} />
           <Route path="/register" render={(props) => { return <Form isRegisterForm={true}  {...props} /> }} /> */}
          
