@@ -14,6 +14,16 @@ router.get("/time",authenticateToken,(req,res)=>{
 })
 
 
+router.post("/login", (req, res,next) => {
+   
+    //do something to req.body
+   //user name password wrong
+   // return res.status(403).send("wrong password")
+   
+    next()
+
+},generateAndDispatchToken)
+
 router.post("/register", (req, res,next) => {
    
     //do something to req.body
