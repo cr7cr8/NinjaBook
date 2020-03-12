@@ -5,7 +5,7 @@
 
 import { useState } from "react";
 
-export const useAsyncReducer = (reducerFunctions, initialState = null) => {
+export const useUserStateManager = (reducerFunctions, initialState = null) => {
   
   const [state, setState] = useState(initialState);
 

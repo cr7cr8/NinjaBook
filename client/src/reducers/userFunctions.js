@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode"
 
 
-export const userReducerFunctions = (user, { type = "", ...paramObj }) => {
+export const userFunctions = (user, { type = "", ...paramObj }) => {
 
   return new Promise(function (resolve, reject) {
 

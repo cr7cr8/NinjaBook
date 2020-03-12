@@ -3,8 +3,8 @@ import React, { createContext, useState, useReducer, useEffect, useContext } fro
 import jwtDecode from "jwt-decode"
 
 
-import { useAsyncReducer } from '../reducers/useAsyncReducer'
-import { userReducerFunctions } from '../reducers/UserReducerFunctions'
+import { useUserStateManager } from '../reducers/useUserStateManager'
+import { userFunctions } from '../reducers/userFunctions'
 
 
 
@@ -15,7 +15,7 @@ export const UserContext = createContext()
 const UserContextProvider = (props) => {
 
 
-    const [user, dispatch] = useAsyncReducer(userReducerFunctions, { username: "Dddd" })
+    const [user, dispatch] = useUserStateManager(userFunctions, { username: "Dddd" })
 
 
 
