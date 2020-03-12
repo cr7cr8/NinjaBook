@@ -13,7 +13,7 @@ function authenticateToken(req, res, next) {
         next()
     }
     catch (err) {
-       return res.status(400).send("Invalid token")
+       return res.status(400).json("Invalid token")
     }
 }
 

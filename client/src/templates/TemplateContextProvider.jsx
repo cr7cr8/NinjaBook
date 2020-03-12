@@ -1,28 +1,25 @@
-import React, { createContext, useState,useReducer, useEffect, useContext } from 'react';
-//import { bookReducer } from '../reducers/BookReducer';
-
+import React, { createContext ,useEffect} from 'react';
+import  useTemplateStateManager  from './useTemplateStateManager';
+import  templateFunctions,{initialState}  from './templateFunctions';
 
 export const TemplateContext = createContext()
 
 
 const TemplateContextProvider = (props) => {
 
-
-    const reducer = (state,paramObj)=>{
+    const [state, dispatcher] = useTemplateStateManager(   templateFunctions ,initialState )
         
-        if (paramObj.type === "addBook") {  return {...state}  }
-        else{ return state }
-           
-    }
+    useEffect(function(){
+
+      //  dispatcher({action:"gogo",newName:"cccccsssdd"})
+
+    },[])
 
 
-    const [state, dispatch] = useReducer(  reducer, {/* initialState Object */}  )
-    
-    useEffect(() => {  }, [/* call effect funtion based on the passed in state change */])
-    
     return (
-        <TemplateContext.Provider value={{ state, dispatch }}>
+        <TemplateContext.Provider value={{ state, dispatcher }}>
             {props.children}
+           
         </TemplateContext.Provider>
     );
 }

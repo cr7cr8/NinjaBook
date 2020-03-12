@@ -10,6 +10,12 @@ GET http://localhost/api/user/time
 
 
 ###
+GET http://localhost/api/user/demo
+###
+
+
+
+###
 GET http://localhost/api/user/time
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODM5MjA0MzcsImV4cCI6MTU4MzkzMTIzN30.4YjZ52G4Q2wNZCIlZ3U_6p-BSVYNcvc_NGZipnF5ECo
 ###
@@ -34,5 +40,11 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost/api/user/login
+POST http://localhost/api/user/login
+Content-Type: application/json
+
+{
+    "username":"aaa",
+    "password":"ddsd"
+}
 ###

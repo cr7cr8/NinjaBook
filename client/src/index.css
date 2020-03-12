@@ -67,6 +67,8 @@ input[type='text'], input[type='password']{
   background: #3c1f3c;
   color: #fff;
   border: 0;
+  border-radius: 4px;
+  box-shadow: 1px 1px 5px 3px  rgb(54, 7, 40);
 }
 
 
