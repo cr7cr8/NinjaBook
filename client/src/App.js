@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component, useContext, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 
@@ -23,6 +23,7 @@ const App = (props) => {
 
     <div className="App">
       
+      <Suspense></Suspense>
 
 
       <UserContextProvider>

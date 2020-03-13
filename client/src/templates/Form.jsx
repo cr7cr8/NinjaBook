@@ -7,7 +7,7 @@ import { UserContext } from "../../contexts/UserContextProvider"
 const Form = (props) => {
 
     //console.log(props.location.pathname)
-    const { user, dispatcher: dispatchUser } = useContext(UserContext)
+    //const { user, dispatcher: dispatchUser } = useContext(UserContext)
 
     let isRegisterForm = props.isRegisterForm
 
@@ -28,9 +28,19 @@ const Form = (props) => {
         }
     )
 
+
+
+    // useMemo(function(){
+    //     setState({...state})
+
+    // },props.location)
+
+
+
     const button = useRef();
-    useEffect( () => {
-       
+    useEffect(
+        () => {
+
             if (!isRegisterForm) {
                 delete state.data.password2
                 delete state.error.password2
@@ -47,6 +57,7 @@ const Form = (props) => {
     const schema = {
         username: Joi.string().min(3).required().label("Username"),
         password: Joi.string().min(3).required().label("Password"),
+
         password2: Joi.any().valid(state.data.password).required().options({ language: { any: { allowOnly: 'is not matching' } } }).label("Retyped Passwrod")
     }
 
@@ -54,7 +65,7 @@ const Form = (props) => {
 
     const doSubmit = (e) => {
         e.preventDefault();
-        dispatchUser({ type: "fetchUser", ...state.data })
+  //      dispatchUser({ type: "fetchUser", ...state.data })
         
 
        
