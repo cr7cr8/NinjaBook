@@ -25,7 +25,15 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODM5MjA0MzcsImV4c
 POST http://localhost/api/user/register
 ###
 
+###
+POST http://localhost/api/user/login
+Content-Type: application/json
 
+{
+    "username":"ttyy57",
+    "password":"ccc4"
+}
+###
 
 
 ###
@@ -33,18 +41,10 @@ POST http://localhost/api/user/register
 Content-Type: application/json
 
 {
-    "username":"aaa",
-    "password":"ddsd"
+    "username":"ttyy57",
+    "password":"ccc4"
 }
 ###
 
 
-###
-POST http://localhost/api/user/login
-Content-Type: application/json
 
-{
-    "username":"aaa",
-    "password":"ddsd"
-}
-###

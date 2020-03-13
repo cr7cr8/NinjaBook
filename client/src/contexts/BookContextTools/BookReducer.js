@@ -14,9 +14,6 @@ export const bookReducer = (state, {type,...paramObj}) => {
             return book.id !== paramObj.id
         }))
     }
-    // else if (paramObj.type === "getLocalStorage") {
-    //     return [...state, ...JSON.parse(localStorage.getItem("books"))]
-    // }
     else if (type === "setLocalStorage") {
 
         localStorage.setItem("books", JSON.stringify(state))

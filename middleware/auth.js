@@ -3,6 +3,9 @@
 const jwt = require("jsonwebtoken")
 
 
+
+
+
 function authenticateToken(req, res, next) {
     const token = req.header("x-auth-token")
     if (!token) { return res.status(401).send("Access denied,no token provided") }
@@ -13,11 +16,9 @@ function authenticateToken(req, res, next) {
         next()
     }
     catch (err) {
-       return res.status(400).json("Invalid token")
+        return res.status(400).json("Invalid token")
     }
 }
-
-
 
 
 
@@ -32,6 +33,7 @@ function generateAndDispatchToken(req, res, next) {
         .header("access-control-expose-headers", "x-auth-token")
         .json(req.body)
 
+        console.log("token sent")
 
 }
 
@@ -40,5 +42,6 @@ function generateAndDispatchToken(req, res, next) {
 
 module.exports = {
     generateAndDispatchToken,
+    
     authenticateToken
 }
