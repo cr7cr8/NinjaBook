@@ -5,14 +5,15 @@
 
 import { useState } from "react";
 
-export const useUserStateManager = (userFunctions, initialState = {username:"dummy"}) => {
+export const useUserStateManager = (userFunctions, initialState = {username:""}) => {
 
 
 
 
   const [state, setState] = useState(initialState);
 
-  const dispatcher = (actionObj) => {
+  const dispatch = (actionObj) => {
+
 
     const result = userFunctions(state, actionObj)
 
@@ -29,7 +30,7 @@ export const useUserStateManager = (userFunctions, initialState = {username:"dum
 
   }
 
-  return [state, dispatcher];
+  return [state, dispatch];
 };
 
 

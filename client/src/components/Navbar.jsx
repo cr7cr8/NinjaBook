@@ -6,7 +6,7 @@ import { UserContext } from '../contexts/UserContextProvider';
 const Navbar = (props) => {
 
   const { books, dispatch:dispatchBook } = useContext(BookContext);
-  const { user, dispatcher: dispatchUser } = useContext(UserContext)
+  const { user, dispatch: dispatchUser } = useContext(UserContext)
   return (
     <React.Fragment>
 

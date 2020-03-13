@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode"
 
 
 import { useUserStateManager } from './UserContextTools/useUserStateManager'
-import { userFunctions,initialState } from './UserContextTools/userFunctions'
+import { userFunctions, initialState } from './UserContextTools/userFunctions'
 
 
 
@@ -16,25 +16,24 @@ const UserContextProvider = (props) => {
 
     console.log(initialState)
 
-    const [user, dispatcher] = useUserStateManager(userFunctions, initialState)
+    const [user, dispatch] = useUserStateManager(userFunctions, initialState)
 
 
-    // useEffect(function(){
 
-    //   //  dispatcher({action:"fetchUser",user})
-    // })
-    
-    
+    useEffect(function () {
+  
+        if (user.username === "") {
+            dispatch({ type: "fetchDemo" })
+        }
 
-    if(user.username="dummy"){
+    }, [])
 
-        return <hi>no user</hi>
-    }
+
 
 
 
     return (
-        <UserContext.Provider value={{ user, dispatcher }}>
+        <UserContext.Provider value={{ user, dispatch }}>
             {props.children}
         </UserContext.Provider>
     );

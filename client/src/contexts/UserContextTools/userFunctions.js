@@ -2,10 +2,7 @@ import jwtDecode from "jwt-decode"
 
 
 
-export const initialState = JSON.parse(localStorage.getItem("user")) || { username: "dummy" }
-
-
-
+export const initialState = JSON.parse(localStorage.getItem("user")) || { username: "" }
 
 export const userFunctions = (user, { type = "", ...paramObj }) => {
 
@@ -22,42 +19,19 @@ export const userFunctions = (user, { type = "", ...paramObj }) => {
     }, 0)
 
 
-    return { username: "dummy" }
+    return { username: "" }
   }
   else if (type === "fetchUser") {
 
-
-    return fetch("http://localhost/api/user/login", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(paramObj)
-    })
-      .then((response) => {
-
-        const token = response.headers.get('x-auth-token')
-        const decodeToken = jwtDecode(token)
-
-        setTimeout(function () {
-
-          alert(user.username + "\n" + decodeToken.username)
-          if (user.username !== decodeToken.username) {
-
-
-            localStorage.setItem("user", JSON.stringify(decodeToken))
-          }
-
-        }, 1000)
-
-        return decodeToken
-
-      })
-
-      .catch(error => {
-        return error
-      })
+    return fetchUser(user, paramObj)
 
   }
+  else if (type === "fetchDemo") {
 
+    console.log("======  fetchDemo called")
+    return fetchUser(user, { username: "demo" })
+
+  }
 
 
   else { return user }
@@ -66,11 +40,61 @@ export const userFunctions = (user, { type = "", ...paramObj }) => {
 }
 
 
+
+
+function fetchUser(user, paramObj) {
+  return fetch("http://localhost/api/user/login", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(paramObj)
+  })
+    .then((response) => {
+
+      const token = response.headers.get('x-auth-token')
+      const decodeToken = jwtDecode(token)
+
+      setTimeout(function () {
+
+        console.log(user.username + "\n" + decodeToken.username +"\n token saved")
+        if (user.username !== decodeToken.username) {
+
+
+          localStorage.setItem("user", JSON.stringify(decodeToken))
+        }
+
+      }, 1000)
+
+      return decodeToken
+
+    })
+
+    .catch(error => {
+      return error
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function setToken(token) {
   localStorage.set("token", token)
 }
 
-function getToken(){
+function getToken() {
 
   return localStorage.get("token")
 }
@@ -81,4 +105,6 @@ function getDecodedToken() {
 
   return decodeToken
 }
+
+
 
