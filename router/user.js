@@ -30,7 +30,8 @@ router.post("/login", (req, res, next) => {
                     next()
                 }
                 else{
-                    res.status(401).send("wrong password")
+                    console.log("wrong password")
+                    res.status(400).send("wrong password")
                 }
             }
             else {

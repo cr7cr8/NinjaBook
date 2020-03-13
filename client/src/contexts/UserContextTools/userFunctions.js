@@ -1,39 +1,46 @@
 import jwtDecode from "jwt-decode"
+import axios from "axios";
 
 
+export const initialState = (function () {
 
-export const initialState = JSON.parse(localStorage.getItem("user")) || { username: "" }
+  const token = getDecodedToken()
+
+  return token
+    ? { username: token.username }
+    : { username: "" }
+}());
+
 
 export const userFunctions = (user, { type = "", ...paramObj }) => {
 
 
 
-  if (type === "changeName") {
-    return { username: paramObj.username }
-  }
-  else if (type === "removeLocalStorage") {
-
-    setTimeout(function () {
-      localStorage.removeItem("user")
-      alert("user lcoal storage removed")
-    }, 0)
-
-
+  if (type === "removeLocalStorage") {
+ 
+      localStorage.removeItem("token")
+    
+   
     return { username: "" }
   }
-  else if (type === "fetchUser") {
+  else if (type === "login") {
 
-    return fetchUser(user, paramObj)
+    return axios
+      .post("http://localhost/api/user/login", paramObj)
+      .then(response => {
+
+        setToken(response.headers["x-auth-token"])
+        return Promise.resolve(response.data)
+      })
+      .catch(err => {
+        err.response.data.indexOf("user") > -1
+          ? paramObj.setErrMsg("username", err.response.data)
+          : paramObj.setErrMsg("password", err.response.data)
+
+        return Promise.reject(err.response.data)
+      })
 
   }
-  else if (type === "fetchDemo") {
-
-    console.log("======  fetchDemo called")
-    return fetchUser(user, { username: "demo" })
-
-  }
-
-
   else { return user }
 
 
@@ -41,69 +48,25 @@ export const userFunctions = (user, { type = "", ...paramObj }) => {
 
 
 
-
-function fetchUser(user, paramObj) {
-  return fetch("http://localhost/api/user/login", {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(paramObj)
-  })
-    .then((response) => {
-
-      const token = response.headers.get('x-auth-token')
-      const decodeToken = jwtDecode(token)
-
-      setTimeout(function () {
-
-        console.log(user.username + "\n" + decodeToken.username +"\n token saved")
-        if (user.username !== decodeToken.username) {
-
-
-          localStorage.setItem("user", JSON.stringify(decodeToken))
-        }
-
-      }, 1000)
-
-      return decodeToken
-
-    })
-
-    .catch(error => {
-      return error
-    })
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function setToken(token) {
-  localStorage.set("token", token)
+  localStorage.setItem("token", token)
 }
 
 function getToken() {
 
-  return localStorage.get("token")
+  return localStorage.getItem("token")
 }
 function getDecodedToken() {
 
-  const token = localStorage.get("token")
-  const decodeToken = jwtDecode(token)
 
-  return decodeToken
+
+  const token = localStorage.getItem("token")
+
+  return Boolean(token) ? jwtDecode(token) : null
+
+
+
+
 }
 
 

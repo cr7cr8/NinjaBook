@@ -7,41 +7,48 @@ import { UserContext } from "../../contexts/UserContextProvider"
 const Form = (props) => {
 
     //console.log(props.location.pathname)
-    const { user, dispatcher: dispatchUser } = useContext(UserContext)
-
     let isRegisterForm = props.isRegisterForm
-
+    const { user, dispatch: dispatchUser } = useContext(UserContext)
 
     const [state, setState] = useState(
         {
+            format: isRegisterForm
+                ? ["text", "password", "password"]
+                : ["text", "password"],
 
+            data: isRegisterForm
+                ? { username: "", password: "", password2: "", }
+                : { username: "", password: "" },
 
-            format: ["text", "password", "password"],
-
-            data: {
-                username: "", password: "", password2: "",
-            },
-
-            error: {
-                username: "", password: "", password2: ""
-            },
+            error: isRegisterForm
+                ? { username: "", password: "", password2: "" }
+                : { username: "", password: "" }
         }
     )
 
+
+    const setErrMsg = (colName, msg) => {
+
+
+        setState({
+            ...state,
+            error: { ...state.error, [colName]: msg } 
+        })
+
+
+        // const obj = state.error
+        // const obj2 = { ...obj, [colName]: msg }
+        // const obj3 = { error: obj2 }
+        // const obj4 = { ...state, ...obj3 }
+        // setState(obj4)
+    }
+
     const button = useRef();
-    useEffect( () => {
-       
-            if (!isRegisterForm) {
-                delete state.data.password2
-                delete state.error.password2
-                state.format.pop()
-                setState({ ...state })
-            }
 
-            //   button.current.disabled = "true"
-            //   button.current.value = isRegisterForm ? "Sign Up" : "Login"
+    //  button.current.disabled = "true"
+    //  button.current.value = isRegisterForm ? "Sign Up" : "Login"
 
-        }, [])
+
 
 
     const schema = {
@@ -51,13 +58,13 @@ const Form = (props) => {
     }
 
 
-
     const doSubmit = (e) => {
         e.preventDefault();
-        dispatchUser({ type: "fetchUser", ...state.data })
-        
+        dispatchUser({ type: "login", ...state.data, setErrMsg })
 
-       
+
+
+
     }
 
 
@@ -83,7 +90,7 @@ const Form = (props) => {
             }
         }
 
-    //    console.log(state.error)
+        //    console.log(state.error)
         setState({ ...state })
 
     }
@@ -95,13 +102,9 @@ const Form = (props) => {
         return result.error ? result.error.details[0].message : null
     }
 
-
-
-
     return (
 
         <form onSubmit={doSubmit}>
-
 
             {Object.keys(state.data).map((keyName, i) => {
 

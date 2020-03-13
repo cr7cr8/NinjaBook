@@ -14,7 +14,7 @@ export const UserContext = createContext()
 
 const UserContextProvider = (props) => {
 
-    console.log(initialState)
+  //  console.log(initialState)
 
     const [user, dispatch] = useUserStateManager(userFunctions, initialState)
 
@@ -22,9 +22,9 @@ const UserContextProvider = (props) => {
 
     useEffect(function () {
   
-        if (user.username === "") {
-            dispatch({ type: "fetchDemo" })
-        }
+     //   if (user.username === "") {
+     //       dispatch({ type: "fetchDemo" })
+     //   }
 
     }, [])
 

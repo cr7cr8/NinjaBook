@@ -5,7 +5,7 @@
 
 import { useState } from "react";
 
-export const useUserStateManager = (userFunctions, initialState = {username:""}) => {
+export const useUserStateManager = (userFunctions, initialState = { username: "" }) => {
 
 
 
@@ -14,17 +14,21 @@ export const useUserStateManager = (userFunctions, initialState = {username:""})
 
   const dispatch = (actionObj) => {
 
-
     const result = userFunctions(state, actionObj)
-
-
     if (Promise.resolve(result) !== result) {
       setState({ ...state, ...result })
+
     }
     else {
       result
-        .then(data => { setState({ ...state, ...data }) })
-        .catch(error => { alert(error); console.log(error); setState({ ...state, promiseError: error }) })
+        .then(data => {
+          setState({ ...state, ...data })
+          //this.props.history.push("/")
+          window.location.assign("/")
+        })
+        .catch(err => {
+          setState({ ...state })
+        })
 
     }
 

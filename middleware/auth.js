@@ -26,12 +26,12 @@ function generateAndDispatchToken(req, res, next) {
 
     /**  Token content is req.body */
     const token =
-        jwt.sign(req.body, 'secretKey', { expiresIn: "3h" })
+        jwt.sign({username:req.body.username}, 'secretKey', { expiresIn: "3h" })
 
     res
         .header("x-auth-token", token)
         .header("access-control-expose-headers", "x-auth-token")
-        .json(req.body)
+        .json({username:req.body.username})
 
         console.log("token sent")
 
