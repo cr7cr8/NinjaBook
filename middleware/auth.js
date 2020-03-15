@@ -32,7 +32,7 @@ function generateAndDispatchToken(req, res, next) {
 
     /**  Token content is req.body */
     const token =
-        jwt.sign({ username: req.body.username }, 'secretKey', { expiresIn: "3h" })
+        jwt.sign({ username: req.body.username }, 'secretKey', { expiresIn: "1000d" })
 
     res
         .header("x-auth-token", token)
@@ -40,7 +40,7 @@ function generateAndDispatchToken(req, res, next) {
         .json({ username: req.body.username })
 
     console.log("token sent")
-
+ 
 }
 
 
