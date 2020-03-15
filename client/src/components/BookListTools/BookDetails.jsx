@@ -1,5 +1,5 @@
 import React, { useContext, useRef,useEffect /*useState*/ } from 'react';
-import { BookContext } from '../../contexts/BookContextProvider'
+import { BookListContext } from '../../contexts/BookListContextProvider'
 
 
 
@@ -21,7 +21,7 @@ const BookDetails = ({ book }) => {
 
 
     const myButton = useRef()
-    const { dispatch } = useContext(BookContext)
+    const { dispatch } = useContext(BookListContext)
 
     // const [{useOut,mouseEnter,mouseOut}, setPanalStyle] = useState({
 
@@ -49,7 +49,7 @@ const BookDetails = ({ book }) => {
                     
                     ref={myButton}
 
-                    onClick={() => { dispatch({ type: "removeBook", id: book.id }) }}
+                    onClick={() => { dispatch({ type: "deleteBook", id: book.id }) }}
 
                     // onMouseEnter={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
                     // onMouseOut={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}

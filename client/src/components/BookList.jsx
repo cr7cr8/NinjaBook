@@ -1,20 +1,24 @@
-import React, { useContext } from 'react';
-import { BookContext } from '../contexts/BookContextProvider'
+import React, { useContext,useEffect } from 'react';
+import { BookListContext } from '../contexts/BookListContextProvider'
 import BookForm from './BookListTools/BookForm';
 import BookDetails from './BookListTools/BookDetails';
 
 const BookList = (props) => {
 
-    const { books } = useContext(BookContext)
+    const { bookList,dispatch } = useContext(BookListContext)
 
-    books.sort(
-        function(a,b){  
-            
-            return a.id>=b.id?-1:1
-            
-        }
-    )
     
+    //  bookList.sort(
+    //      function(a,b){  
+            
+    //          return a.id>=b.id?-1:1
+            
+    //      }
+    //  )
+    useEffect(function(){
+
+        dispatch({type:"getBookList"})
+    },[])
 
 
     return (
@@ -22,7 +26,7 @@ const BookList = (props) => {
         <div className="book-list">
             <ul >
                 {
-                    books.map(book => {
+                    bookList.map(book => {
                         return (        
                          <BookDetails {...{ key:book.id,book }}/*book={book}*/ />
                         )

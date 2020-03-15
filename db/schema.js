@@ -8,17 +8,56 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 3,
         maxlength: 50,
-        index:{unique: true}
+        index: { unique: true }
     },
     password: {
         type: String,
         required: true,
         minlength: 3,
         maxlength: 1024
+    },
+},
+    {
+        toObject: { virtuals: true },
+        collection: "users",
+        //  timestamps: true, 
+         
     }
-}, { timestamps: true, collection: "users" })
+
+)
+
+userSchema.virtual("listingBooks", {
+
+    ref: "bookList",
+    localField: "username",
+    foreignField: "owner",
+    justOne: false
+})
+
+
+
+
+
+const bookListSchema = new mongoose.Schema(
+    {
+        title: { type: String, required: true, minlength: 1, },
+        author: { type: String, },
+        owner: { type: String },
+        id: { type: Number }
+
+    },
+    {
+        //timestamps: true,
+        collection: "bookList"
+    }
+)
+
+
+
+
 
 const User = connDB.model("users", userSchema);
+const BookList = connDB.model("bookList", bookListSchema);
 
-module.exports = { User }
+module.exports = { User, BookList }
 

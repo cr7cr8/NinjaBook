@@ -25,7 +25,12 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1ODM5MjA0MzcsImV4c
 POST http://localhost/api/user/register
 ###
 
-###
+
+
+
+
+
+### login USER
 POST http://localhost/api/user/login
 Content-Type: application/json
 
@@ -36,8 +41,8 @@ Content-Type: application/json
 ###
 
 
-###
-POST http://localhost/api/user/register
+### login USER
+POST http://localhost/api/user/login
 Content-Type: application/json
 
 {
@@ -47,4 +52,36 @@ Content-Type: application/json
 ###
 
 
+### GET BOOKLIST
+GET http://localhost/api/booklist/getbooklist
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNjYyIsImlhdCI6MTU4NDI1ODYxNywiZXhwIjoxNTg0MjY5NDE3fQ.VELsSVhGXyH6AeeQyR6EQvhIRtzh8h6oMdoZlo2LZ2Q
 
+
+###
+
+### ADD USER
+POST http://localhost/api/user/register
+Content-Type: application/json
+
+{
+    "username":"nnn",
+    "password":"nnn"
+}
+###
+
+### CREATE BOOK
+POST http://localhost/api/booklist/addbook
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhYSIsImlhdCI6MTU4NDI1NTUyMCwiZXhwIjoxNTg0MjY2MzIwfQ.u8F0L_qg_H7VX2gq9SyxXo1ortKdEzRFTe9GxSXmLSY
+Content-Type: application/json
+
+{
+    "title":"5555",
+    "author":"5555"
+}
+###
+
+### CREATE BOOK
+DELETE  http://localhost/api/booklist/deletebook/5e6ce5ab31567c0c2c323155
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhYSIsImlhdCI6MTU4NDE5MTA2MiwiZXhwIjoxNTg0MjAxODYyfQ.YCbLLTAvqcS8HnbdfVkcw09bE_YVUYVvey2YhvZysZU
+
+###

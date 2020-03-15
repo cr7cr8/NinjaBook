@@ -14,17 +14,17 @@ const Form = (props) => {
 
     const [state, setState] = useState(
         {
+            format: isRegisterForm
+                ? ["text", "password", "password"]
+                : ["text", "password"],
 
+            data: isRegisterForm
+                ? { username: "", password: "", password2: "", }
+                : { username: "", password: "" },
 
-            format: ["text", "password", "password"],
-
-            data: {
-                username: "", password: "", password2: "",
-            },
-
-            error: {
-                username: "", password: "", password2: ""
-            },
+            error: isRegisterForm
+                ? { username: "", password: "", password2: "" }
+                : { username: "", password: "" }
         }
     )
 
@@ -40,13 +40,6 @@ const Form = (props) => {
     const button = useRef();
     useEffect(
         () => {
-
-            if (!isRegisterForm) {
-                delete state.data.password2
-                delete state.error.password2
-                state.format.pop()
-                setState({ ...state })
-            }
 
             //   button.current.disabled = "true"
             //   button.current.value = isRegisterForm ? "Sign Up" : "Login"

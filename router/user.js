@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs")
-const { User } = require("../db/schema")
+const { User, BookList } = require("../db/schema")
 const { authenticateToken, generateAndDispatchToken } = require('../middleware/auth')
 
 
@@ -24,12 +24,12 @@ router.post("/login", (req, res, next) => {
 
     User.findOne({ username: req.body.username })
         .then(user => {
-          
+
             if (user) {
                 if (bcrypt.compareSync(req.body.password, user.password)) {
                     next()
                 }
-                else{
+                else {
                     console.log("wrong password")
                     res.status(400).send("wrong password")
                 }
@@ -48,18 +48,45 @@ router.post("/login", (req, res, next) => {
 }, generateAndDispatchToken)
 
 router.post("/register", (req, res, next) => {
+    try {
+        User.create({ ...req.body, password: bcrypt.hashSync(req.body.password) })
+            .then(doc => {
+                console.log(doc.password);
+                next()
+            })
+            .catch(err => {
+                if (err.code === 11000) { res.status(403).json("username already exist") }
+                else { res.status(500).json("failed to create in DB") }
+            })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json("failed to create in Server")
+    }
 
-    User.create({ ...req.body, password: bcrypt.hashSync(req.body.password) })
-        .then(doc => {
-            console.log(doc.password);
-            next()
-        })
-        .catch(err => {
-            if (err.code === 11000) { res.status(403).json("username already exist") }
-            else { res.status(500).json("failed to create") }
-        })
 
-}, generateAndDispatchToken)
+},
+    (req, res, next) => {
+
+        try {
+            BookList.create({title:"Welcome to use",author:Date().substr(0,24),owner:req.body.username,id:Date.now()})
+            .then(doc=>{
+                console.log(doc)
+                next()
+            })
+            .catch(err=>{
+                console.log("failed to add welcome in db, \nbut user created,need manual login ")
+                res.status(500).json("failed to add welcome in db,\nbut user created,need manual login")
+
+            })
+        }
+        catch (err) {
+            console.log("failed to add welcome in Server")
+            res.status(500).json("failed to add welcome in Server")
+        }
+
+    },
+    generateAndDispatchToken)
 
 
 

@@ -3,6 +3,7 @@ const app = express()
 const cors = require("cors")
 
 const user = require("./router/user")
+const bookList = require("./router/bookList")
 const clientPack = require("./router/clientPack")
 
 
@@ -14,6 +15,8 @@ app.use(cors())
 
 
 app.use("/api/user",user)
+app.use("/api/bookList",bookList)
+
 
 app.get("*",clientPack)
 

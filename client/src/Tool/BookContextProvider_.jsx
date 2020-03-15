@@ -1,14 +1,16 @@
 import React, { createContext, useReducer, useEffect } from 'react';
-import { bookReducer } from './BookContextTools/BookReducer';
+import { bookReducer } from '../contexts/BookListContextTools/BookReducer';
+
+
+import { useBookStateManager } from '../contexts/BookListContextTools/useBookListStateManager';
 
 
 
-export const BookContext = createContext()
+export const BookListContext = createContext()
 
 
-const BookContextProvider = (props) => {
+const BookListContextProvider = (props) => {
 
-    
 
 
     const [books, dispatch] = useReducer(
@@ -35,14 +37,14 @@ const BookContextProvider = (props) => {
 
     return (
 
-        <BookContext.Provider value={{ books, dispatch }}>
+        <BookListContext.Provider value={{ books, dispatch }}>
             {props.children}
-        </BookContext.Provider>
+        </BookListContext.Provider>
 
     );
 }
 
-export default BookContextProvider;
+export default BookListContextProvider;
 
 
 

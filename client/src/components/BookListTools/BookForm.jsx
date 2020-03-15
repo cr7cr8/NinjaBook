@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { BookContext } from '../../contexts/BookContextProvider';
-
+import { BookListContext } from '../../contexts/BookListContextProvider';
+import { UserContext } from '../../contexts/UserContextProvider';
 
 
 
@@ -10,34 +10,36 @@ const BookForm = (props) => {
     const [title, setTitle] = useState("")
     const [author, setAuthor] = useState("")
 
-    const { dispatch } = useContext(BookContext)
-
+    const { dispatch } = useContext(BookListContext)
+    const { user } = useContext(UserContext)
     const handleSubmit = (e) => {
         e.preventDefault()
 
-      
-       
-            dispatch({ type: "addBook", book: { title, author:author||Date().substr(0,24), id: Date.now() } })
-        
+
+
+        dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now() } })
 
 
 
 
-          setTitle("")
-          setAuthor("")
+
+        setTitle("")
+        setAuthor("")
     }
 
-
+    //{!user.username &&<button>  <Link to="/login" >login  </Link></button>}
     return (
 
+        <React.Fragment>
 
-        <form onSubmit={handleSubmit}>
-            <input placeholder="title" type="text" value={title} onChange={(e) => { setTitle(e.currentTarget.value) }} required></input>
-            <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
+            {user.username && <form onSubmit={handleSubmit}>
+                <input placeholder="title" type="text" value={title} onChange={(e) => { setTitle(e.currentTarget.value) }} required></input>
+                <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
 
-            <input type="submit" value="Add Book" />
-        </form>
-
+                <input type="submit" value="Add Book" />
+            </form>
+            }
+        </React.Fragment>
     );
 }
 

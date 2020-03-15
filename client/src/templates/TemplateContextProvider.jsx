@@ -1,13 +1,14 @@
 import React, { createContext ,useEffect} from 'react';
-import  useTemplateStateManager  from './useTemplateStateManager';
-import  templateFunctions,{initialState}  from './templateFunctions';
+
+import useTemplateStateManager from './TemplateContextTools/useTemplateStateManager';
+import templateStateFunctions ,{initialState} from './TemplateContextTools/templateFunctions';
 
 export const TemplateContext = createContext()
 
 
 const TemplateContextProvider = (props) => {
 
-    const [state, dispatcher] = useTemplateStateManager(   templateFunctions ,initialState )
+    const [state, dispatch] = useTemplateStateManager(   templateStateFunctions ,initialState )
         
     useEffect(function(){
 
@@ -17,7 +18,7 @@ const TemplateContextProvider = (props) => {
 
 
     return (
-        <TemplateContext.Provider value={{ state, dispatcher }}>
+        <TemplateContext.Provider value={{ state, dispatch }}>
             {props.children}
            
         </TemplateContext.Provider>

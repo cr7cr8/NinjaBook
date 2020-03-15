@@ -60,7 +60,7 @@ const Form = (props) => {
 
     const doSubmit = (e) => {
         e.preventDefault();
-        dispatchUser({ type: "login", ...state.data, setErrMsg })
+        dispatchUser({ type: isRegisterForm?"register":"login", ...state.data, setErrMsg })
 
 
 

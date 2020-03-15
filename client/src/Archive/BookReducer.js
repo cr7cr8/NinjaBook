@@ -5,6 +5,9 @@ export const bookReducer = (state, {type,...paramObj}) => {
 
     if (type === "addBook") {
 
+
+
+
         return [...state, { title: paramObj.book.title, author: paramObj.book.author, id: Date.now() }]
 
     }

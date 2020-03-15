@@ -4,8 +4,10 @@
 
 
 import { useState } from "react";
+import { userFunctions, initialState } from './userFunctions'
 
-export const useUserStateManager = (userFunctions, initialState = { username: "" }) => {
+
+export const useUserStateManager = ( ) => {
 
 
 
