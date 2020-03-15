@@ -2,14 +2,19 @@ import React, { useState, useEffect, useRef, useContext, useCallback } from 'rea
 import Joi from 'joi-browser';
 import jwtDecode from "jwt-decode"
 
-import { UserContext } from "../../contexts/UserContextProvider"
+import {  UserContext } from "../../contexts/UserContextProvider"
 
 const Form = (props) => {
 
     //console.log(props.location.pathname)
     let isRegisterForm = props.isRegisterForm
     const { user, dispatch: dispatchUser } = useContext(UserContext)
-
+    
+    
+    if(user.username){(props.history.push("/"))}
+   
+    
+    
     const [state, setState] = useState(
         {
             format: isRegisterForm

@@ -13,7 +13,7 @@ export const initialState = (function () {
 }());
 
 
-export const userFunctions = (user, { type = "", ...paramObj }) => {
+export const userFunctions = (state, setState, { type = "", ...paramObj }) => {
 
 
 
@@ -21,8 +21,8 @@ export const userFunctions = (user, { type = "", ...paramObj }) => {
 
     localStorage.removeItem("token")
 
-
-    return { username: "" }
+    setState({ ...state, username: "" })
+    // return { username: "" }
   }
   else if (type === "register") {
 
@@ -34,14 +34,16 @@ export const userFunctions = (user, { type = "", ...paramObj }) => {
       )
       .then(response => {
         setToken(response.headers["x-auth-token"])
-        return Promise.resolve(response.data)
+        window.location.assign("/")
+        
+        //return Promise.resolve(response.data)
       })
       .catch(err => {
         err.response.data.indexOf("user") > -1
           ? paramObj.setErrMsg("username", err.response.data)
           : paramObj.setErrMsg("username", err.response.data)
-
-        return Promise.reject(err.response.data)
+       //   setState({ ...state })
+       //return Promise.reject(err.response.data)
       })
 
 
@@ -53,18 +55,19 @@ export const userFunctions = (user, { type = "", ...paramObj }) => {
       .then(response => {
 
         setToken(response.headers["x-auth-token"])
-        return Promise.resolve(response.data)
+        window.location.assign("/")
+        //return Promise.resolve(response.data)
       })
       .catch(err => {
         err.response.data.indexOf("user") > -1
           ? paramObj.setErrMsg("username", err.response.data)
           : paramObj.setErrMsg("password", err.response.data)
 
-        return Promise.reject(err.response.data)
+      //  return Promise.reject(err.response.data)
       })
 
   }
-  else { return user }
+  else { return state }
 
 
 }

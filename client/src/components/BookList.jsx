@@ -17,7 +17,7 @@ const BookList = (props) => {
     //  )
     useEffect(function(){
 
-        dispatch({type:"getBookList"})
+     setTimeout(function(){   dispatch({type:"getBookList"})},500)
     },[])
 
 

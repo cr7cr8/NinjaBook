@@ -16,23 +16,24 @@ export const useUserStateManager = ( ) => {
 
   const dispatch = (actionObj) => {
 
-    const result = userFunctions(state, actionObj)
-    if (Promise.resolve(result) !== result) {
-      setState({ ...state, ...result })
+    const result = userFunctions(state, setState,actionObj)
+    // if (Promise.resolve(result) !== result) {
+    //   setState({ ...state, ...result })
 
-    }
-    else {
-      result
-        .then(data => {
-          setState({ ...state, ...data })
-          //this.props.history.push("/")
-          window.location.assign("/")
-        })
-        .catch(err => {
-          setState({ ...state })
-        })
+    // }
+    // else {
+    //   result
+    //     .then(data => {
+    //       //setState({ ...state, ...data })
+    //       window.location.assign("/")
+    //       //this.props.history.push("/")
+    //    //   setTimeout(function(){window.location.assign("/")})
+    //     })
+    //     .catch(err => {
+    //       setState({ ...state })
+    //     })
 
-    }
+    // }
 
   }
 
@@ -41,26 +42,4 @@ export const useUserStateManager = ( ) => {
 
 
 
-
-
-// import { useState, useContext, useEffect, useCallback, useMemo, } from 'react';
-// //import { reducerFunction } from './reducerFunction'
-// //import { TemplateContext } from './TemplateContextProvider';
-
-
-
-
-
-// export const useAsyncReducer = (reducer, initialState = null) => {
-
-//   const [state, setState] = useState(initialState);
-
-
-//   const dispatch = async action => {
-//     const result = reducer(state, action);
-
-//   };
-
-//   return [state, null];
-// };
 
