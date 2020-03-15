@@ -24,6 +24,7 @@ const BookList = (props) => {
     return (
 
         <div className="book-list">
+               <BookForm/>
             <ul >
                 {
                     bookList.map(book => {
@@ -34,7 +35,7 @@ const BookList = (props) => {
                 }
             </ul>
 
-            <BookForm/>
+         
         </div>
 
     );
