@@ -10,7 +10,7 @@ const clientPack = require("./router/clientPack")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-if(process.env.port){
+if(!process.env.port){
     const cors = require("cors")
     app.use(cors())
 }

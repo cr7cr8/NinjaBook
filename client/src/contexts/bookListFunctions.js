@@ -13,7 +13,7 @@ function initialize() {
     if (getToken()) {
 
 
-        return []
+        return [{ title: "loading ....", author: Date(), id: Date.now() }]
     }
     else {
 
