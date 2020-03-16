@@ -3,11 +3,12 @@ import { BookListContext } from '../contexts/BookListContextProvider'
 import { Route, Switch, Link, } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContextProvider';
 
+import { Spring } from 'react-spring/renderprops';
 
 
 const Navbar = (props) => {
 
-  
+  const [goalHeight, setGoalHeight] = useState(100)
   const { bookList, dispatch: dispatchBook } = useContext(BookListContext);
   const { user, dispatch: dispatchUser } = useContext(UserContext)
 
@@ -17,7 +18,9 @@ const Navbar = (props) => {
 
 
   return (
-   
+    <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: 1, height: goalHeight }} >
+      {(props) => {
+        return (
 
           <React.Fragment>
 
@@ -46,7 +49,12 @@ const Navbar = (props) => {
             }
             {!Boolean(bookList.length) ? <p style={{ textAlign: "center" }}>No books to read, Hello free time :)</p> : <p></p>}
           </React.Fragment>
-     
+        )
+      }}
+
+
+
+    </Spring>
   );
 }
 

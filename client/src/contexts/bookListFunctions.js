@@ -13,7 +13,7 @@ function initialize() {
     if (getToken()) {
 
 
-        return [{ title: "loading ....", author: Date(), id: Date.now() }]
+        return [{ title: "... loading ...", author: Date(), id: Date.now() }]
     }
     else {
 
@@ -41,15 +41,15 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
         return axios.put(`${url}/booklist/updatebook/` + paramObj.id, book)
             .then(response => {
-               // console.log(response.data)
-            
+                // console.log(response.data)
+
             })
             .catch(err => {
-                
+
                 let book = bookList.find(book => book.id === paramObj.id)
                 book.finish = !book.finish
                 setState([...bookList])
-                
+
                 console.log(err.response.data)
                 alert(err.response.data)
             })
@@ -61,20 +61,20 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
     else if (type === "deleteBook") {
 
-    
+
         const arr = bookList.filter(book => {
-            
-            if( book.id !== paramObj.id){
-              
+
+            if (book.id !== paramObj.id) {
+
                 return book;
             }
         })
 
-        setState(arr)
+
 
         return axios.delete(`${url}/booklist/deletebook/` + paramObj.id)
             .then(response => {
-          
+                setTimeout(function () { setState(arr) }, 500)
             })
             .catch(err => {
 
@@ -95,7 +95,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
             .then(list => {
 
                 const arr = list.data.map((book) => {
-                    return { title: book.title, author: book.author, id: book.id,finish:book.finish }
+                    return { title: book.title, author: book.author, id: book.id, finish: book.finish }
                 })
                 //   console.log(arr)
                 setState(arr)
@@ -113,7 +113,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
         return axios.post(`${url}/booklist/addbook`, paramObj.book)
             .then(
                 (response) => {
-                  
+
 
                 }
             )

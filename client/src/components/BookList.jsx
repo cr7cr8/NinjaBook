@@ -3,6 +3,8 @@ import { BookListContext } from '../contexts/BookListContextProvider'
 import BookForm from './BookListTools/BookForm';
 import BookDetails from './BookListTools/BookDetails';
 
+
+
 const BookList = (props) => {
 
     const { bookList, dispatch } = useContext(BookListContext)
@@ -29,14 +31,14 @@ const BookList = (props) => {
             <ul>
                 {
                     bookList.map(book => {
-                        return (
-                            <BookDetails {...{ key: book.id, book }}/*book={book}*/ />
-                        )
+                  
+                                     return <BookDetails style={props} {...{ key: book.id, book }}/*book={book}*/ /> 
+                        
+
+                    
                     })
                 }
             </ul>
-
-
         </div>
 
     );

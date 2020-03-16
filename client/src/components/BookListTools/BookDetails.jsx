@@ -1,97 +1,67 @@
-import React, { useContext, useRef, useEffect /*useState*/ } from 'react';
+import React, { useContext, useRef, useLayoutEffect, useState, Component } from 'react';
 import { BookListContext } from '../../contexts/BookListContextProvider'
 
-
-
-const BookDetails = ({ book }) => {
+import { Spring } from 'react-spring/renderprops';
 
 
 
-    useEffect(function () {
-
-
-        myButton.current.onmouseenter = (e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }
-        myButton.current.onmouseleave = (e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }
-
-    }, []);
+import { useSpring, animated } from 'react-spring';
+const BookDetails = ({ book, ...props }) => {
 
     var timer = 0;
     var delay = 200;
     var prevent = false;
 
-
-
-
-
-    const myButton = useRef()
     const { dispatch } = useContext(BookListContext)
-
-    // const [{useOut,mouseEnter,mouseOut}, setPanalStyle] = useState({
-
-    //     useOut:true,
-    //     mouseEnter: {
-    //         opacity: 0.7,
-    //         textDecoration: "line-through"
-    //     },
-
-    //     mouseOut: {
-    //         opacity: 1,
-    //         textDecoration: "none"
-    //     }
-    // })
-
+const [goalOpa,setGoalOpa] = useState(1)
+const [goalHeight,setGoalHeight] = useState("auto")
     return (
+         <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }}  >
+ 
+            {(props) => {
+                return (
+                    <li className={book.finish ? "done" : ""} style={props} >
 
-        <li className={book.finish?"done":""} >
+                        <button className="deleteBtn"
+                            onClick={() => {
+                                timer = setTimeout(function () {
+                                    if (!prevent) {
+                                        dispatch({ type: "toggleStatus", id: book.id })
+                                    }
+                                    prevent = false;
+                                }, delay);
+                            }}
+                            onDoubleClick={
+                                () => {
+                                    clearTimeout(timer);
+                                    prevent = true;
+                                    setGoalOpa(0)
+                                    setGoalHeight(0)
+                                    dispatch({ type: "deleteBook", id: book.id })
+                          
+                                
+                                }
+                            }
 
-            <button className="deleteBtn"
+                            onMouseEnter={(e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }}
+                            onMouseOut={(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }}
 
-                ref={myButton}
-                onClick={() => {
+                        >delete</button>
 
+                  
+                                    <div className={book.finish ? "title done" : "title"} >{book.title}  </div>
 
-                    timer = setTimeout(function () {
-                        if (!prevent) {
-                            dispatch({ type: "toggleStatus", id: book.id })
-                        }
-                        prevent = false;
-                    }, delay);
+                                    <div className={book.finish ? "author done" : "author"} >{book.author} </div>
+                         
+                       
 
-
-                }}
-                onDoubleClick={
-
-                    () => {
-                        clearTimeout(timer);
-                        prevent = true;
-                        dispatch({ type: "deleteBook", id: book.id })
-                    }
-                }
-
-
-            // onMouseEnter={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
-            // onMouseOut={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
-
-            //    onMouseEnter={(e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }}
-            //    onMouseOut={(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }}
-
-            >delete</button>
-
-         
-
-
-            <div className={book.finish?"title done":"title"}>{book.title}  </div>
-
-
-
-            <div className={book.finish?"author done":"author"}>{book.author} </div>
+                   
 
 
-        </li>
-
-
-
-
+                    </li>
+                )
+            }}
+        </Spring>
     );
 }
 
