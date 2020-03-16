@@ -1,15 +1,17 @@
-import React, { createContext, useState, useReducer, useEffect, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 
-
-
-import { useUserStateManager } from './UserContextTools/useUserStateManager'
+import { userFunctions, initialState } from './userFunctions';
 
 export const UserContext = createContext()
 
 const UserContextProvider = (props) => {
 
-    const [user, dispatch] = useUserStateManager()
-   // useEffect(function () {   }, [])
+    const [user, setState] = useState(initialState)
+
+    const dispatch = (paramObj) => {
+        return userFunctions(user, setState, paramObj)
+    }
+
 
     return (
         <UserContext.Provider value={{ user, dispatch }}>

@@ -85,3 +85,13 @@ DELETE  http://localhost/api/booklist/deletebook/5e6ce5ab31567c0c2c323155
 x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhYSIsImlhdCI6MTU4NDE5MTA2MiwiZXhwIjoxNTg0MjAxODYyfQ.YCbLLTAvqcS8HnbdfVkcw09bE_YVUYVvey2YhvZysZU
 
 ###
+
+### update BOOK
+put  http://localhost/api/booklist/updatebook/5e6ce5ab31567c0c2c323155
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhYSIsImlhdCI6MTU4NDE5MTA2MiwiZXhwIjoxNTg0MjAxODYyfQ.YCbLLTAvqcS8HnbdfVkcw09bE_YVUYVvey2YhvZysZU
+
+###
+
+
+
+1584358223127

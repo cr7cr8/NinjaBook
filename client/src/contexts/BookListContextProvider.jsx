@@ -1,9 +1,5 @@
-import React, { createContext, useReducer, useEffect } from 'react';
-
-
-
-import { useBookListStateManager } from './BookListContextTools/useBookListStateManager';
-
+import React, { createContext, useState } from 'react';
+import { bookListFunctions, initialState } from './bookListFunctions';
 
 
 export const BookListContext = createContext()
@@ -12,29 +8,17 @@ export const BookListContext = createContext()
 const BookListContextProvider = (props) => {
 
 
-    const [bookList, dispatch] = useBookListStateManager()
 
+    const [bookList, setState] = useState(initialState)
 
-//     const [books, dispatch] = useReducer(
-//         bookReducer,
-//         JSON.parse(localStorage.getItem("books")) ||
-//         [{ title: "Welcome to use", author: Date(), id: Date.now() }]
+    const dispatch = (paramObj) => {
 
-//     )
-
-
-//    useEffect(() => {
-
-//        dispatch({ type: "setLocalStorage" })
-
-//         localStorage.setItem("books", JSON.stringify(books))
-
-//    }, [books])
+        return bookListFunctions(bookList, setState, paramObj)
+    }
 
 
     return (
         <BookListContext.Provider value={{ bookList, dispatch }}>
-        {/* <BookListContext.Provider value={{ books, dispatch }}> */}
             {props.children}
         </BookListContext.Provider>
 

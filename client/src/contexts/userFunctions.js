@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode"
 import axios from "axios";
-import url from "../../config";
+import url from "../config";
 
 
 export const initialState = (function () {
@@ -15,18 +15,16 @@ export const initialState = (function () {
 
 export const userFunctions = (state, setState, { type = "", ...paramObj }) => {
 
-
-
   if (type === "removeLocalStorage") {
 
     localStorage.removeItem("token")
 
     setState({ ...state, username: "" })
-    // return { username: "" }
+
   }
   else if (type === "register") {
 
-    console.log(paramObj)
+   
 
     return axios
       .post(`${url}/user/register`,
@@ -35,15 +33,15 @@ export const userFunctions = (state, setState, { type = "", ...paramObj }) => {
       .then(response => {
         setToken(response.headers["x-auth-token"])
         window.location.assign("/")
-        
+
         //return Promise.resolve(response.data)
       })
       .catch(err => {
         err.response.data.indexOf("user") > -1
           ? paramObj.setErrMsg("username", err.response.data)
           : paramObj.setErrMsg("username", err.response.data)
-       //   setState({ ...state })
-       //return Promise.reject(err.response.data)
+        //   setState({ ...state })
+        //return Promise.reject(err.response.data)
       })
 
 
@@ -63,7 +61,7 @@ export const userFunctions = (state, setState, { type = "", ...paramObj }) => {
           ? paramObj.setErrMsg("username", err.response.data)
           : paramObj.setErrMsg("password", err.response.data)
 
-      //  return Promise.reject(err.response.data)
+        //  return Promise.reject(err.response.data)
       })
 
   }

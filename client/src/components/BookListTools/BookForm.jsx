@@ -17,7 +17,7 @@ const BookForm = (props) => {
 
 
 
-        dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now() } })
+        dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now(),finish:false } })
 
 
 

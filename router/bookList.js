@@ -17,8 +17,6 @@ router.get("/getbooklist", authenticateToken, (req, res) => {
 
         .populate("listingBooks")
 
-
-
         .then(u => {
 
             console.log(u.listingBooks.sort((a, b) => { return a.id <= b.id ? 1 : -1 }))
@@ -27,23 +25,38 @@ router.get("/getbooklist", authenticateToken, (req, res) => {
         })
         .catch(err => {
             console.log(err)
-            res.status(500).send("error in get booklist in db")
+            res.status(500).json("error in get booklist in db")
         })
 })
 
 router.delete("/deletebook/:id", authenticateToken, (req, res) => {
-console.log( {id: req.params.id, owner:req.user.username})
-    BookList.deleteOne({ id: req.params.id, owner:req.user.username })
-    .then(doc=>{
-      //  console.log(doc)
-        res.json(doc)
-    })
-    .catch(err=>{
-        console.log(err)
-        res.status(500).send("error in get booklist in db")
-    })
+    console.log({ id: req.params.id, owner: req.user.username })
+    BookList.deleteOne({ id: req.params.id, owner: req.user.username })
+        .then(doc => {
+            //  console.log(doc)
+            res.json(doc)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json("error in get booklist in db")
+        })
 
 })
+
+router.put("/updatebook/:id", authenticateToken, (req, res) => {
+
+    BookList.updateOne({id:req.params.id,owner:req.user.username},req.body,{new:true})
+    .then(doc=>{
+        console.log("===============================")
+        console.log(doc)
+        res.json(doc)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json("error in updating in db")
+    })
+})
+
 
 
 router.post("/addbook", authenticateToken, (req, res) => {
@@ -61,7 +74,7 @@ router.post("/addbook", authenticateToken, (req, res) => {
     })
         .catch(err => {
             console.log(err)
-            res.status(500).send("error in get booklist in db")
+            res.status(500).json("error in get booklist in db")
         })
 
 })
@@ -69,7 +82,8 @@ router.post("/addbook", authenticateToken, (req, res) => {
 router.delete("/deletebook/:id", authenticateToken, (req, res) => {
     BookList.deleteOne(
         {
-            _id: req.params.id
+            id: req.params.id,
+            owner:req.user.username
         }
     ).then(book => {
         console.log(req.params.id + " deleted")
@@ -77,11 +91,11 @@ router.delete("/deletebook/:id", authenticateToken, (req, res) => {
     })
         .catch(err => {
             console.log(err)
-            res.status(500).send("error in deletebook in db")
+            res.status(500).json("error in deletebook in db")
         })
 
 })
-
+  
 
 
 

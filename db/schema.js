@@ -43,7 +43,8 @@ const bookListSchema = new mongoose.Schema(
         title: { type: String, required: true, minlength: 1, },
         author: { type: String, },
         owner: { type: String },
-        id: { type: Number }
+        id: { type: Number },
+        finish:{type:Boolean,default:false}
 
     },
     {

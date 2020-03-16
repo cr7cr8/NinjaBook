@@ -1,21 +1,24 @@
-import React, { useContext, useRef,useEffect /*useState*/ } from 'react';
+import React, { useContext, useRef, useEffect /*useState*/ } from 'react';
 import { BookListContext } from '../../contexts/BookListContextProvider'
 
 
 
 const BookDetails = ({ book }) => {
 
-   
-   
-    useEffect(function(){
 
-     
-         myButton.current.onmouseenter = (e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }
-         myButton.current.onmouseleave=(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }
 
-     },[]);
-  
-     
+    useEffect(function () {
+
+
+        myButton.current.onmouseenter = (e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }
+        myButton.current.onmouseleave = (e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }
+
+    }, []);
+
+    var timer = 0;
+    var delay = 200;
+    var prevent = false;
+
 
 
 
@@ -37,39 +40,56 @@ const BookDetails = ({ book }) => {
     //     }
     // })
 
-
-
-
     return (
-    
-           
-            <li>
-             
-                <button className="deleteBtn" 
-                    
-                    ref={myButton}
 
-                    onClick={() => { dispatch({ type: "deleteBook", id: book.id }) }}
+        <li className={book.finish?"done":""} >
 
-                    // onMouseEnter={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
-                    // onMouseOut={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
+            <button className="deleteBtn"
 
-                 //    onMouseEnter={(e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }}
-                 //    onMouseOut={(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }}
-
-                >delete</button>
+                ref={myButton}
+                onClick={() => {
 
 
-                <div className="title">{book.title}  </div>
+                    timer = setTimeout(function () {
+                        if (!prevent) {
+                            dispatch({ type: "toggleStatus", id: book.id })
+                        }
+                        prevent = false;
+                    }, delay);
+
+
+                }}
+                onDoubleClick={
+
+                    () => {
+                        clearTimeout(timer);
+                        prevent = true;
+                        dispatch({ type: "deleteBook", id: book.id })
+                    }
+                }
+
+
+            // onMouseEnter={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
+            // onMouseOut={(e) => { setPanalStyle({useOut:!useOut,mouseEnter,mouseOut}) }}
+
+            //    onMouseEnter={(e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;" }}
+            //    onMouseOut={(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;" }}
+
+            >delete</button>
+
+         
+
+
+            <div className={book.finish?"title done":"title"}>{book.title}  </div>
 
 
 
-                <div className="author">{book.author} </div>
+            <div className={book.finish?"author done":"author"}>{book.author} </div>
 
 
-            </li>
+        </li>
 
-        
+
 
 
     );
