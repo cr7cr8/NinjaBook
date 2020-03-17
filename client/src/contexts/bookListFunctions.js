@@ -59,6 +59,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
         console.log("no tokens to perferm booklist functions")
     }
 
+
     else if (type === "deleteBook") {
 
 
@@ -69,8 +70,6 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
                 return book;
             }
         })
-
-
 
         return axios.delete(`${url}/booklist/deletebook/` + paramObj.id)
             .then(response => {
@@ -90,15 +89,26 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
         setState([])
     }
+    else if (type === "cleanFinish") {
+
+      setState(  bookList.filter(book=>book.finish!==true))
+
+    }
     else if (type === "getBookList") {
         return axios.get(`${url}/booklist/getbooklist`)
             .then(list => {
 
-                const arr = list.data.map((book) => {
-                    return { title: book.title, author: book.author, id: book.id, finish: book.finish }
-                })
+
+              
+                    const arr = list.data.map((book) => {
+                        return { title: book.title, author: book.author, id: book.id, finish: book.finish }
+                    })
+                    setState(arr)
+               
+
+
                 //   console.log(arr)
-                setState(arr)
+
             })
             .catch(err => {
                 console.log(err.response.data)

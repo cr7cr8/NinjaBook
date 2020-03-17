@@ -12,12 +12,15 @@ const BookDetails = ({ book, ...props }) => {
     var delay = 200;
     var prevent = false;
 
+
+
+
     const { dispatch } = useContext(BookListContext)
-const [goalOpa,setGoalOpa] = useState(1)
-const [goalHeight,setGoalHeight] = useState("auto")
+    const [goalOpa, setGoalOpa] = useState(1)
+    const [goalHeight, setGoalHeight] = useState("auto")
     return (
-         <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }}  >
- 
+        <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }}  >
+
             {(props) => {
                 return (
                     <li className={book.finish ? "done" : ""} style={props} >
@@ -38,8 +41,8 @@ const [goalHeight,setGoalHeight] = useState("auto")
                                     setGoalOpa(0)
                                     setGoalHeight(0)
                                     dispatch({ type: "deleteBook", id: book.id })
-                          
-                                
+
+
                                 }
                             }
 
@@ -48,14 +51,14 @@ const [goalHeight,setGoalHeight] = useState("auto")
 
                         >delete</button>
 
-                  
-                                    <div className={book.finish ? "title done" : "title"} >{book.title}  </div>
 
-                                    <div className={book.finish ? "author done" : "author"} >{book.author} </div>
-                         
-                       
+                        <div className={book.finish ? "title done" : "title"} >{book.title}  </div>
 
-                   
+                        <div className={book.finish ? "author done" : "author"} >{book.author} </div>
+
+
+
+
 
 
                     </li>
