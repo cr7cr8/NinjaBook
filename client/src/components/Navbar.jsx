@@ -12,7 +12,7 @@ const Navbar = (props) => {
   const { bookList, dispatch: dispatchBook } = useContext(BookListContext);
   const { user, dispatch: dispatchUser } = useContext(UserContext)
 
-  const [btnOn, setBtnOn] = useState(false)
+  const [btnOn, setBtnOn] = useState(true)
 
 
   return (

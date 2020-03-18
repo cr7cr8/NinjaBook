@@ -19,7 +19,7 @@ const BookList = (props) => {
     //  )
     useEffect(function () {
 
-        setTimeout(function () { dispatch({ type: "getBookList" }) }, 0)
+        setTimeout(function () { dispatch({ type: "getBookList",justUnfished:true }) }, 0)
     }, [])
 
 

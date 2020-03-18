@@ -8,6 +8,28 @@ const { BookList } = require("../db/schema")
 
 const { User } = require("../db/schema")
 
+
+router.get("/getunfinishedbooklist", authenticateToken, (req, res) => {
+    User.findOne({ username: req.user.username })
+        .select("-_id -password -__v")
+
+        .populate("listingBooks")
+
+        .then(u => {
+
+            const arr = u.listingBooks
+                .sort((a, b) => { return a.id <= b.id ? 1 : -1 })
+                .filter(book => book.finish === false)
+            console.log(arr)
+            res.json(arr)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json("error in get booklist in db")
+        })
+})
+
+
 router.get("/getbooklist", authenticateToken, (req, res) => {
 
 
@@ -45,16 +67,16 @@ router.delete("/deletebook/:id", authenticateToken, (req, res) => {
 
 router.put("/updatebook/:id", authenticateToken, (req, res) => {
 
-    BookList.updateOne({id:req.params.id,owner:req.user.username},req.body,{new:true})
-    .then(doc=>{
-        console.log("===============================")
-        console.log(doc)
-        res.json(doc)
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json("error in updating in db")
-    })
+    BookList.updateOne({ id: req.params.id, owner: req.user.username }, req.body, { new: true })
+        .then(doc => {
+            console.log("===============================")
+            console.log(doc)
+            res.json(doc)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json("error in updating in db")
+        })
 })
 
 
@@ -83,7 +105,7 @@ router.delete("/deletebook/:id", authenticateToken, (req, res) => {
     BookList.deleteOne(
         {
             id: req.params.id,
-            owner:req.user.username
+            owner: req.user.username
         }
     ).then(book => {
         console.log(req.params.id + " deleted")
@@ -95,7 +117,7 @@ router.delete("/deletebook/:id", authenticateToken, (req, res) => {
         })
 
 })
-  
+
 
 
 

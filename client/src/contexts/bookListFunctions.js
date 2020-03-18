@@ -91,20 +91,20 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
     }
     else if (type === "cleanFinish") {
 
-      setState(  bookList.filter(book=>book.finish!==true))
+        setState(bookList.filter(book => book.finish !== true))
 
     }
     else if (type === "getBookList") {
-        return axios.get(`${url}/booklist/getbooklist`)
+        return axios.get(paramObj.justUnfished ? `${url}/booklist/getunfinishedbooklist` : `${url}/booklist/getbooklist`)
             .then(list => {
 
 
-              
-                    const arr = list.data.map((book) => {
-                        return { title: book.title, author: book.author, id: book.id, finish: book.finish }
-                    })
-                    setState(arr)
-               
+
+                const arr = list.data.map((book) => {
+                    return { title: book.title, author: book.author, id: book.id, finish: book.finish }
+                })
+                setState(arr)
+
 
 
                 //   console.log(arr)
