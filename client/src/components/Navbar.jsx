@@ -32,8 +32,8 @@ const Navbar = (props) => {
           onColor="#6d3d6d"
           offColor="#6d3d6d"
           
-          offHandleColor="#6d3d6d"
-          onHandleColor="#6d3d6d"
+          offHandleColor="#eeeeee"
+          onHandleColor="#eeeeee"
 
           handleDiameter={30}
           uncheckedIcon={false}
