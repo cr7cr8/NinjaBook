@@ -27,7 +27,6 @@ body {
 .navbar h1{
   margin: 10px 0;
 }
-
 .book-list{
   margin: 20px;
   
@@ -37,9 +36,6 @@ body {
   list-style-type: none;
 
 }
-
-
-
 .book-list li{
   background: #6d3d6d;
   border-radius: 4px;
@@ -67,8 +63,6 @@ body {
   font-size: 0.9em;
   color: #ddd;
 }
-
-
 .book-list .title.done{
  color: #666
 }

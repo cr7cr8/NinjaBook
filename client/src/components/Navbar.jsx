@@ -12,7 +12,7 @@ const Navbar = (props) => {
   const { bookList, dispatch: dispatchBook } = useContext(BookListContext);
   const { user, dispatch: dispatchUser } = useContext(UserContext)
 
-  const [btnOn, setBtnOn] = useState(true)
+  const [btnOn, setBtnOn] = useState(false)
 
 
   return (
@@ -27,7 +27,7 @@ const Navbar = (props) => {
 
         <SwitchButton
           checked={btnOn}
-          onChange={function () { btnOn ? dispatchBook({ type: "getBookList" }) : dispatchBook({ type: "cleanFinish" }); setBtnOn(!btnOn) }}
+          onChange={function () { !btnOn ? dispatchBook({ type: "getBookList" }) : dispatchBook({ type: "cleanFinish" }); setBtnOn(!btnOn) }}
           
           onColor="#6d3d6d"
           offColor="#6d3d6d"
