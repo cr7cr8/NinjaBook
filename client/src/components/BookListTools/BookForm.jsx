@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, createRef, useLayoutEffect } from 'react';
 import { BookListContext } from '../../contexts/BookListContextProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
-
+import TextareaAutosize from 'react-textarea-autosize';
 
 
 const BookForm = (props) => {
@@ -13,7 +13,8 @@ const BookForm = (props) => {
     const { dispatch } = useContext(BookListContext)
     const { user } = useContext(UserContext)
 
-    const [textRows, setTextRows] = useState(2)
+
+
 
 
     const handleSubmit = (e) => {
@@ -37,41 +38,32 @@ const BookForm = (props) => {
         <React.Fragment>
 
             {user.username && <form onSubmit={handleSubmit}>
-                <textarea placeholder="title" type="text" value={title}
-                    rows={textRows}
+                {/* <input placeholder="title" type="text" value={title}
+                  
                     style={{
                         fontSize: "1.5em",
-
-
                     }}
 
                     onChange={
                         (e) => {
-                         //   e.currentTarget.height = "5px";
                             e.currentTarget.style.height = e.currentTarget.scrollHeight + "px"
+                            setTitle(e.currentTarget.value)
+                        }}
+                    required>
+                </input>
+                */}
 
 
-                            const lines = title.split('\n');
-
-                            if (!lines[lines.length - 1]) {
-                           
-                                e.currentTarget.style.height ="5px"
-                                //   setTextRows(textRows-1)
-                            }
-                            console.log(!!lines[lines.length - 1])
-
+                 <TextareaAutosize value={title}
+                    
+                    placeholder="title"
+                    onChange={
+                        (e) => {
                             setTitle(e.currentTarget.value)
 
                         }}
-                    onKeyPress={
-                        (e) => {
-
-                        }
-                    }
-
-                    required>
-
-                </textarea>
+                    required
+                ></TextareaAutosize> 
                 <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
 
                 <input type="submit" value="Add Book" />

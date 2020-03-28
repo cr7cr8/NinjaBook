@@ -90,7 +90,7 @@ body {
 form{
   padding: 20px;
 }
-input[type='text'], input[type='password'], textarea{
+input[type='text'], input[type='password'],textarea{
   width: 100%;
   height: "auto";
   padding: 10px;
@@ -104,7 +104,11 @@ input[type='text'], input[type='password'], textarea{
   font-size: 1.5em;
 }
 
-
+textarea{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+}
 
 
 input[type='submit']{
