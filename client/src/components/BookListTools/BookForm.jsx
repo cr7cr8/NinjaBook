@@ -15,7 +15,7 @@ const BookForm = (props) => {
 
 
     let myRef = createRef()
-
+    let textareaRef = createRef()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -47,7 +47,7 @@ const BookForm = (props) => {
                             setTitle(e.currentTarget.value)
                         }}
 
-                        
+                    ref={tag => (textareaRef = tag)}
                     required
                 ></TextareaAutosize>
                 <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
@@ -57,9 +57,9 @@ const BookForm = (props) => {
 
             </form>
             }
-            
-            <input type="file"  ref={fileInput=>(myRef=fileInput)}></input>
-                <button onClick={()=>{myRef.click()}}>pick file</button>
+
+            <input type="file" ref={fileInput => (myRef = fileInput)}></input>
+            <button onClick={() => { /*console.log(textareaRef.props.value);*/myRef.click() }}>pick file</button>
         </React.Fragment>
     );
 }
