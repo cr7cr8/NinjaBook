@@ -20,7 +20,7 @@ const BookForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-
+   
 
         dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
 
@@ -52,7 +52,6 @@ const BookForm = (props) => {
                     required>
                 </input>
                 */}
-
 
                  <TextareaAutosize value={title}
                     

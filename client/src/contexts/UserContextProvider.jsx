@@ -8,6 +8,8 @@ const UserContextProvider = (props) => {
 
     const [user, setState] = useState(initialState)
 
+    document.title = user.username+" - List"||"NinjaBook"
+
     const dispatch = (paramObj) => {
         return userFunctions(user, setState, paramObj)
     }
