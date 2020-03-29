@@ -14,7 +14,7 @@ const BookForm = (props) => {
     const { user } = useContext(UserContext)
 
 
-    let myRef = createRef()
+    let myRef ;
     let textareaRef = createRef()
 
     const handleSubmit = (e) => {
