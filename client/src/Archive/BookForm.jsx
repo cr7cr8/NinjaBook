@@ -14,13 +14,13 @@ const BookForm = (props) => {
     const { user } = useContext(UserContext)
 
 
-    let myRef = createRef()
+
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-
+   
 
         dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
 
@@ -38,28 +38,38 @@ const BookForm = (props) => {
         <React.Fragment>
 
             {user.username && <form onSubmit={handleSubmit}>
+                {/* <input placeholder="title" type="text" value={title}
+                  
+                    style={{
+                        fontSize: "1.5em",
+                    }}
 
-                <TextareaAutosize value={title}
+                    onChange={
+                        (e) => {
+                            e.currentTarget.style.height = e.currentTarget.scrollHeight + "px"
+                            setTitle(e.currentTarget.value)
+                        }}
+                    required>
+                </input>
+                */}
 
+                 <TextareaAutosize value={title}
+                    
                     placeholder="title"
                     onChange={
                         (e) => {
                             setTitle(e.currentTarget.value)
                         }}
-
-                        
                     required
-                ></TextareaAutosize>
+                ></TextareaAutosize> 
                 <input placeholder="author" type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
-
 
                 <input type="submit" value="Add Book" />
 
+
+
             </form>
             }
-            
-            <input type="file"  ref={fileInput=>(myRef=fileInput)}></input>
-                <button onClick={()=>{myRef.click()}}>pick file</button>
         </React.Fragment>
     );
 }
