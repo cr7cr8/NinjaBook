@@ -3,6 +3,7 @@ import { BookListContext } from '../../contexts/BookListContextProvider'
 
 import { Spring } from 'react-spring/renderprops';
 
+import BookButton from './BookButton'
 
 
 import { useSpring, animated } from 'react-spring';
@@ -56,7 +57,7 @@ const BookDetails = ({ book, ...props }) => {
 
                         <div className={book.finish ? "author done" : "author"} >{book.author} </div>
 
-
+                        <BookButton>ss dds oooooooooss dds oooooooooss dds ooooooooo</BookButton>
 
 
 
