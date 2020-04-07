@@ -67,7 +67,7 @@ const Navbar = (props) => {
         logout
         </button>
       }
-      {!Boolean(bookList.length) ? <p style={{ textAlign: "center" }}>No books to read, Hello free time :)</p> : <p></p>}
+      {Boolean(bookList.length) || <p style={{ textAlign: "center" }}>No books to read, Hello free time :)</p> }
     </React.Fragment>
 
   );

@@ -12,38 +12,6 @@ const Pic = require("../db/gridfs")
 
 
 
-
-router.get("/deleteAllFile", function (req, res) {
-
-    Pic.db.collection(Pic.schema.options.collection + ".files").drop()
-        .then(result => {
-            console.log(result)
-        })
-        .catch(err => {
-            console.log(err)
-            //  res.send(Pic.schema.options.collection + " not found")
-        })
-
-
-    Pic.db.collection(Pic.schema.options.collection + ".chunks").drop()
-        .then(result => {
-            console.log(result)
-            res.send(Pic.schema.options.collection + " deleted")
-        })
-        .catch(err => {
-
-            console.log(err)
-
-            res.send(Pic.schema.options.collection + " not found")
-        })
-
-
-
-
-    //    db.collection('someCollection').drop();
-
-})
-
 router.get("/getunfinishedbooklist", authenticateToken, (req, res) => {
     User.findOne({ username: req.user.username })
         .select("-_id -password -__v")
@@ -55,16 +23,6 @@ router.get("/getunfinishedbooklist", authenticateToken, (req, res) => {
             const arr = u.listingBooks
                 .sort((a, b) => { return a.id <= b.id ? 1 : -1 })
                 .filter(book => book.finish === false)
-            /******************
-             * 
-             * 
-             * 
-             * 
-             * 
-             *  */
-          //  console.log(Pic.db.db)
-
-
             //   console.log(arr)
             res.json(arr)
         })
@@ -115,11 +73,11 @@ router.put("/updatebook/:id", authenticateToken, (req, res) => {
     BookList.updateOne({ id: req.params.id, owner: req.user.username }, req.body, { new: true })
         .then(doc => {
             console.log("===============================")
-            //    console.log(doc)
+            console.log(doc)
             res.json(doc)
         })
         .catch(err => {
-            //     console.log(err)
+            console.log(err)
             res.status(500).json("error in updating in db")
         })
 })
@@ -141,34 +99,119 @@ router.post("/addbook", authenticateToken, (req, res) => {
     })
         .catch(err => {
             console.log(err)
-            res.status(500).json("error in add book in db")
+            res.status(500).json("error in get booklist in db")
         })
 
 })
 
 
-router.post("/upload", authenticateToken, Pic.upload.bind(Pic), Pic.update.bind(Pic),
+router.post("/upload", authenticateToken,Pic.upload,
+    
 
+    // (req, res, next) => {
+
+    //     try {
+
+          
+    //         console.log("in upload")
+
+    //         const pic = new Pic({
+    //             obj: {
+    //                 //   linkage: mongoose.Types.ObjectId(req.params.messageid),
+    //                 //   message: mongoose.Types.ObjectId(req.params.messageid),
+    //                 // owner: req.user.username
+    //             }
+    //         })
+
+
+    //         pic.upload(req, res, next);
+
+
+    //     }
+    //     catch (err) {
+    //         console.log(err)
+    //         res.status(500).json(err.message)
+    //     }
+
+
+    // },
     (req, res, next) => {
 
-        BookList.create(
-            {
-                ...JSON.parse(req.body.obj),
-                owner: req.user.username
-            }
-        ).then(book => {
-            //    console.log(book)
-            res.json(book)
-        }).catch(err => {
-            console.log(err)
-            res.status(500).json("error in add book in db")
+     
+      
+        Pic.update(req, res, JSON.parse(req.body.book))
+        .then(resultArr=>{
+            res.json("done")
+        })
+        .catch(errArr=>{
+            res.json("done in error")
         })
 
+
+
+
+        // console.log(Pic.schema.options.collection)
+
+        // console.log(req.files['file'][0])
+        // Pic.db.db.collection("pic_uploads.files").update(
+        //     { _id: req.files['file'][0].id },
+        //     { $set: { "metadata.book": "ddddd" } },
+        //     function (err, result) {
+        //         if (err) console.log(err);
+        //     }
+
+        // )
+
+        //  mongoose.connection.db.collection("pic_uploads.files")
+
+
+        // Pic.db.db.collection("pic_uploads.files", function(err, collection){
+        //       collection.update({"md5":"dddd"})//.toArray(function(err, data){
+
+        // collection.up
+
+        //       console.log(data); // it will print your collection data
+        //     })
+        //    });
+
+
+
+
+        // console.log(req.files['file'])
+
+        //   req.files['file'].forEach(file => {
+
+
+        //     Pic.findOneAndUpdate({filename:file.originalname},{metadata:"bbbbbb"})
+
+
+        //   console.log(file)
+        //   Pic.find({ _id:mongoose.Types.ObjectId(file.id) }, { metadata: { bookid: JSON.parse(req.body.book).id } })
+
+        //   });
+
+        // BookList.create(
+        //     {
+        //         ...book,
+        //         owner: req.user.username
+        //     }
+        // ).then(book => {
+        //     //  console.log(book)
+        //     res.json(book)
+        // }).catch(err => {
+        //     console.log(err)
+        //     res.status(500).json("error in get booklist in db")
+        // })
+
+
+
+
+
     }
+
+
+
 )
-
-router.get("/download/:id", authenticateToken, Pic.download.bind(Pic))
-
 
 router.delete("/deletebook/:id", authenticateToken, (req, res) => {
     BookList.deleteOne(

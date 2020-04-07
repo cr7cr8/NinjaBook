@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
-
 const { connDB } = require("./db")
+
+
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -21,22 +22,16 @@ const userSchema = new mongoose.Schema({
         toObject: { virtuals: true },
         collection: "users",
         //  timestamps: true, 
-         
     }
 
 )
 
 userSchema.virtual("listingBooks", {
 
-    ref: "bookList",
     localField: "username",
-    foreignField: "owner",
+    foreignField: "owner", ref: "bookList",
     justOne: false
 })
-
-
-
-
 
 const bookListSchema = new mongoose.Schema(
     {
@@ -44,7 +39,8 @@ const bookListSchema = new mongoose.Schema(
         author: { type: String, },
         owner: { type: String },
         id: { type: Number },
-        finish:{type:Boolean,default:false}
+        finish: { type: Boolean, default: false },
+        files:{type:Object,default:null}
 
     },
     {
@@ -57,8 +53,27 @@ const bookListSchema = new mongoose.Schema(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const User = connDB.model("users", userSchema);
 const BookList = connDB.model("bookList", bookListSchema);
+
+
+
 
 module.exports = { User, BookList }
 

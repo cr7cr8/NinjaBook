@@ -3,7 +3,10 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import url from "../config";
 
+import FileDownload from 'js-file-download';
+
 if (getToken()) { axios.defaults.headers.common['x-auth-token'] = getToken() }
+
 
 export const initialState = initialize()
 
@@ -101,7 +104,9 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
 
                 const arr = list.data.map((book) => {
-                    return { title: book.title, author: book.author, id: book.id, finish: book.finish }
+
+                    // console.log(book)
+                    return { title: book.title, author: book.author, id: book.id, finish: book.finish, files: book.files }
                 })
                 setState(arr)
 
@@ -111,6 +116,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
             })
             .catch(err => {
+
                 console.log(err.response.data)
                 alert(err.response.data)
             })
@@ -134,6 +140,82 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
                 alert(err.response.data)
             })
     }
+
+    else if (type === "uploadFile") {
+
+        setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
+
+        const data = new FormData()
+        if (paramObj.file) {
+            data.append('file', paramObj.file);
+        }
+        data.append('obj', JSON.stringify(paramObj.book));
+
+        return axios.post(`${url}/booklist/upload`, data, {
+            headers: { 'content-type': 'multipart/form-data' },
+            onUploadProgress: progressEvent => {
+                let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                console.log(percentCompleted)
+            },
+
+        })
+            .then(
+                (response) => {
+
+                    paramObj.setFile(null);
+                    console.log(response.data)
+                    //   alert(response.data)
+                }
+            )
+            .catch(err => {
+                console.log(err.response.data)
+                alert(err.response.data)
+            })
+    }
+
+    else if (type === "downloadFile") {
+
+
+
+        return axios({
+            url: `${url}/booklist/download/${String(paramObj.id)}`,
+            method: 'GET',
+            responseType: 'blob', // important
+            onDownloadProgress: progressEvent => {
+
+
+
+                //    let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                //      console.log(percentCompleted)
+paramObj.obj((progressEvent.loaded*100/progressEvent.total).toFixed(2)+"%")
+console.log((progressEvent.loaded*100/progressEvent.total).toFixed(2))
+
+            }
+        })
+            .then((response) => {
+
+
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', decodeURIComponent(response.headers["file-name"]));
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch(err => {
+                console.log(err.response.data)
+                alert(err.response.data)
+            })
+
+
+
+
+
+    }
+
+
+
+
 
     else {
         return bookList

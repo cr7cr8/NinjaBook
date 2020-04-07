@@ -1,14 +1,28 @@
 const mongoose = require("mongoose")
+mongoose.connection.on('error', function (err) {
+    // console.log('Mongoose default connection error: ' + err);
 
+    console.log("aaaaaaaaaaaaaaa")
+});
 
-const { connDB } = {
+const { connDB, DB, connParam } = {
 
     DB: "mongodb+srv://boss:ABCabc123@cluster0-iiqnu.azure.mongodb.net/NinjaBook?poolSize=10&retryWrites=true&w=majority",
     connParam: { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,/*poolSize:10*/ },
 
-    get connDB() { return mongoose.createConnection(this.DB, this.connParam) },
+    get connDB() {
+
+
+        return mongoose.createConnection(this.DB, this.connParam)
+
+
+
+
+    },
 
 }
+
+
 
 
 
@@ -33,7 +47,7 @@ function wrapAndMerge(...args) {
 }
 
 module.exports = {
-    connDB,
+    connDB: connDB,
 
     wrapAndMerge,
 }
