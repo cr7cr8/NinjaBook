@@ -2,7 +2,8 @@ import React, { useState, useContext, createRef } from 'react';
 import { BookListContext } from '../../contexts/BookListContextProvider';
 import { UserContext } from '../../contexts/UserContextProvider';
 
-import img from "./11.jpg"
+// import img from "./11.jpg"  {/* <img src={img}/> */}
+
 
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -15,7 +16,7 @@ const BookForm = (props) => {
 
     const [file, setFile] = useState(null)
 
-
+    const [progress, setProgress] = useState("0%")
 
     const { dispatch } = useContext(BookListContext)
     const { user } = useContext(UserContext)
@@ -28,13 +29,13 @@ const BookForm = (props) => {
         e.preventDefault()
 
 
-        if (title === "") {
-            return
-        }
+        if (title === "") { return  null }
+           
+     
 
         // dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
-       
-        dispatch({ type: "uploadFile", setFile, file: file, book: { title, files: file?  [file.name]:null      ,author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
+
+        dispatch({ type: "uploadFile", setProgress, setFile, file: file, book: { title, files: file ? [file.name] : null, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
 
         setTitle("")
         setAuthor("")
@@ -43,10 +44,10 @@ const BookForm = (props) => {
     const handleChange = (e) => {
         e.preventDefault();
 
-             console.log(e.currentTarget.files[0])
+        console.log(e.currentTarget.files[0])
 
-          
-        setTitle((title + " " +e.currentTarget.files[0].name).trim())
+
+        setTitle((title + " " + e.currentTarget.files[0].name).trim())
 
 
         e.currentTarget.files[0]
@@ -68,9 +69,9 @@ const BookForm = (props) => {
     //{!user.username &&<button>  <Link to="/login" >login  </Link></button>}
     return (
 
+        // user.username&& <React.Fragment>
         <React.Fragment>
 
-            {/* {user.username && <form onSubmit={handleSubmit}> */}
 
 
             <TextareaAutosize value={title}
@@ -81,23 +82,18 @@ const BookForm = (props) => {
 
                         setTitle(e.currentTarget.value)
                     }}
-           
+
             ></TextareaAutosize>
             <input placeholder={Date().substr(0, 24)} type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
 
-            {/* <button className="btn" onClick={() => { myRef.click() }}>pick file</button>
-                <input type="file" style={{ display: "none" }} onChange={handleChange} ref={fileInput => myRef = fileInput} />
-*/}
 
-            {file && <img src={!file ? "" : URL.createObjectURL(file)} style={{ opacity: 1.0, width: 200, height: 100 }}></img>}
 
+            {file && <img src={file ? URL.createObjectURL(file) : ""} style={{ opacity: 1.0, width: 200, height: 100 }}></img>}
 
             <div>
                 <input type="file" style={{ display: "none" }} onChange={handleChange} ref={fileInput => myRef = fileInput} />
-                <button className="btn"
-                  
-                    onClick={() => { myRef.click() }}>File
-                 </button>
+                <button className="btn" onClick={() => { myRef.click() }}>{progress}</button>
+
                 <button disabled={!title} className="btn" style={{ float: "right", marginTop: "5px" }} onClick={handleSubmit}>Add Book</button >
             </div>
 

@@ -50,7 +50,9 @@ body {
   background: #6d3d6d;
   border-radius: 4px;
   padding: 10px;
-  margin: 10px 0;
+  margin-bottom: 10px ;
+
+
   overflow: hidden;
   box-shadow: 1px 1px 10px 3px  rgb(54, 7, 40);
  

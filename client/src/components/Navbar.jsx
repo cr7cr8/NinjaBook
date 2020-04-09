@@ -14,7 +14,7 @@ const Navbar = (props) => {
 
   const [btnOn, setBtnOn] = useState(false)
 
-
+document.title= user.username || "NinjaBook"
   return (
 
 

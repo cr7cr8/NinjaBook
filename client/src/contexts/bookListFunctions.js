@@ -2,8 +2,10 @@
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import url from "../config";
-
+import React, { useContext, useEffect } from 'react';
 import FileDownload from 'js-file-download';
+import { Link } from 'react-router-dom';
+
 
 if (getToken()) { axios.defaults.headers.common['x-auth-token'] = getToken() }
 
@@ -20,7 +22,10 @@ function initialize() {
     }
     else {
 
-        return [{ title: "Please login to use", author: Date(), id: Date.now() }]
+        return [{
+            title: <React.Fragment>Please <Link to="/login" style={{color:"#eee"}} > Login </Link> or <Link to="/register" style={{color:"#eee"}}> Regist </Link>  to use</React.Fragment>,
+            author: Date(), id: Date.now()
+        }]
     }
 }
 
@@ -155,6 +160,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
             headers: { 'content-type': 'multipart/form-data' },
             onUploadProgress: progressEvent => {
                 let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                paramObj.setProgress((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
                 console.log(percentCompleted)
             },
 
@@ -187,8 +193,8 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
                 //    let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
                 //      console.log(percentCompleted)
-paramObj.obj((progressEvent.loaded*100/progressEvent.total).toFixed(2)+"%")
-console.log((progressEvent.loaded*100/progressEvent.total).toFixed(2))
+                paramObj.obj((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
+                console.log((progressEvent.loaded * 100 / progressEvent.total).toFixed(2))
 
             }
         })
