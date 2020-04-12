@@ -62,7 +62,7 @@ router.get("/getunfinishedbooklist", authenticateToken, (req, res) => {
              * 
              * 
              *  */
-          //  console.log(Pic.db.db)
+            //  console.log(Pic.db.db)
 
 
             //   console.log(arr)
@@ -96,11 +96,15 @@ router.get("/getbooklist", authenticateToken, (req, res) => {
         })
 })
 
-router.delete("/deletebook/:id", authenticateToken, (req, res) => {
-    console.log({ id: req.params.id, owner: req.user.username })
+router.delete("/deletebook/:id", authenticateToken, (req, res,next) => {
+  //  console.log({ id: req.params.id, owner: req.user.username })
     BookList.deleteOne({ id: req.params.id, owner: req.user.username })
         .then(doc => {
-            //  console.log(doc)
+
+            Pic.delete.call(Pic, req, res, next)
+            console.log("deleting")
+          
+           //     console.log(Boolean(doc.files))
             res.json(doc)
         })
         .catch(err => {
@@ -170,22 +174,24 @@ router.post("/upload", authenticateToken, Pic.upload.bind(Pic), Pic.update.bind(
 router.get("/download/:id", authenticateToken, Pic.download.bind(Pic))
 
 
-router.delete("/deletebook/:id", authenticateToken, (req, res) => {
-    BookList.deleteOne(
-        {
-            id: req.params.id,
-            owner: req.user.username
-        }
-    ).then(book => {
-        console.log(req.params.id + " deleted")
-        res.json(req.params.id + " deleted")
-    })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json("error in deletebook in db")
-        })
+// router.delete("/deletebook/:id", authenticateToken, (req, res, next) => {
+//     BookList.deleteOne(
+//         {
+//             id: req.params.id,
+//             owner: req.user.username
+//         }
+//     ).then(book => {
+//       //  console.log(req.params.id + " deleted")
+//         //   res.json(req.params.id + " deleted")
+//         Pic.delete.call(Pic, req, res, next)
 
-})
+//     })
+//         .catch(err => {
+//             console.log(err)
+//             res.status(500).json("error in deletebook in db")
+//         })
+
+// })
 
 
 

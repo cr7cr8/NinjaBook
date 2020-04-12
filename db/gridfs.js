@@ -22,8 +22,9 @@ function createFileModel({ connDB, collectionName }) {
         download: function (req, res) {
             return gridFsDownload.call(this, req, res)
         },
-        delete: function (req, res) {
-            return gridFsDelete.call(this, req, res)
+        delete: function (req, res, next) {
+           // return console.log("start delete", req.params.id);
+           return gridFsDelete.call(this, req, res, next)
         },
 
         upload: function (req, res, next) {
@@ -31,14 +32,13 @@ function createFileModel({ connDB, collectionName }) {
         },
 
         update: function (req, res, next) {
-
             return collectionUpdate.call(this, req, res, next)
         },
 
-        download: function (req, res, next) {
-        
-            return gridFsDownload.call(this, req, res, next)
-        }
+        // download: function (req, res, next) {
+
+        //     return gridFsDownload.call(this, req, res, next)
+        // }
 
 
     };
@@ -116,18 +116,18 @@ function gridFsDownload(req, res, next, /*collectionName*/) {
             cursor.forEach(pic => {
 
                 let gfsrs = gfs.openDownloadStream(pic._id);
-        
+
                 res.header('content-type', pic.contentType);
                 res.header("access-control-expose-headers", "content-type")
                 res.header("file-name", encodeURIComponent(pic.filename))
                 res.header("access-control-expose-headers", "file-name")
 
                 res.header("content-length", pic.length)
-       //         res.header("access-control-expose-headers", "content-length")
+                //         res.header("access-control-expose-headers", "content-length")
 
                 // gfsrs.pipe(res)
                 gfsrs.on("data", function (data) {
-                       console.log(data);
+                    console.log(data);
                     res.write(data);
                 })
                 gfsrs.on("close", function () {
@@ -137,14 +137,14 @@ function gridFsDownload(req, res, next, /*collectionName*/) {
             })
         }
         else {
-                res.status(400).json("no file found")
+            res.status(400).json("no file found")
         }
 
 
 
 
     })
-  
+
 
 
 
@@ -153,19 +153,23 @@ function gridFsDownload(req, res, next, /*collectionName*/) {
 }
 
 function gridFsDelete(req, res) {
+
+console.log("gridfFs Deleting")
+
     var gfs = new mongoose.mongo.GridFSBucket(this.db.db, {
         chunkSizeBytes: 255 * 1024,
         bucketName: this.schema.options.collection
     });
 
-    return gfs.find({ 'metadata.id': mongoose.Types.ObjectId(req.params.id), "metadata.owner": req.user.username }, { limit: 1 }).forEach(pic => {
+    return gfs.find({ 'metadata.id': Number(req.params.id), "metadata.owner": req.user.username }, { limit: 1 }).forEach(pic => {
 
         if (!pic) { return res.send("pic not in database") }
         gfs.delete(mongoose.Types.ObjectId(pic._id), function (err) {
 
             if (err) { console.log(err) }
             else {
-                res.send(pic._id)
+               console.log("file deleted")
+                // res.send(pic._id)
             }
 
         })
