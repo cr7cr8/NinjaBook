@@ -18,12 +18,12 @@ import UserContextProvider from './contexts/UserContextProvider';
 console.log(process.env.NODE_ENV)
 
 const App = (props) => {
-    
+
   return (
 
     <div className="App">
-      
-      <Suspense></Suspense>
+
+      {/* <Suspense></Suspense> */}
 
 
       <UserContextProvider>
@@ -32,8 +32,8 @@ const App = (props) => {
           <Navbar />
           <Switch>
 
-            {/* <Route path="/login" render={(props) => { return <Form {... { ...{ isRegisterForm: false }, ...props }} /> }} />
-          <Route path="/register" render={(props) => { return <Form isRegisterForm={true}  {...props} /> }} /> */}
+            {/* <Route path="/login" render={(props) => { return <Form {... { ...{ isRegisterForm: false }, ...props }} /> }} />*/}
+            {/* <Route path="/register" render={(props) => { return <Form isRegisterForm={true}  {...props} /> }} /> */}
 
 
             <Route path="/login" render={(props) => { return <LoginForm {...props} /> }} />

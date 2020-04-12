@@ -14,13 +14,13 @@ const Navbar = (props) => {
 
   const [btnOn, setBtnOn] = useState(false)
 
-document.title= user.username || "NinjaBook"
+//document.title= user.username || "NinjaBook"
   return (
 
 
     <React.Fragment>
 
-      <nav className="navbar" style={props}>
+      <nav className="navbar" >
 
         <h1>{user.username} Reading List...</h1>
         <p>Currently you have {bookList.length} books to get through...</p>
