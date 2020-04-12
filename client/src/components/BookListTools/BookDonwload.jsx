@@ -40,7 +40,7 @@ const BookDownload = ({ whenClick, ...props }) => {
                     onClick={function () { setGoalWidth("5%") }}
                 >
                     <div style={{
-                        paddingLeft: "10px", paddingRight: "10px", wordWrap: "break-word",
+                        paddingLeft: "10px", paddingRight: "10px", 
                       
                     }}>{props.children}</div>
                 </animated.div>

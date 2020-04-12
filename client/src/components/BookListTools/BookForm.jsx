@@ -17,7 +17,7 @@ const BookForm = (props) => {
     const [file, setFile] = useState(null)
 
     const [progress, setProgress] = useState("0%")
-
+console.log(progress==="0%")
     const { dispatch } = useContext(BookListContext)
     const { user } = useContext(UserContext)
 
@@ -29,9 +29,9 @@ const BookForm = (props) => {
         e.preventDefault()
 
 
-        if (title === "") { return  null }
-           
-     
+        if (title === "") { return null }
+
+
 
         // dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
 
@@ -92,9 +92,20 @@ const BookForm = (props) => {
 
             <div>
                 <input type="file" style={{ display: "none" }} onChange={handleChange} ref={fileInput => myRef = fileInput} />
-                <button className="btn" onClick={() => { myRef.click() }}>{progress}</button>
+                <button
+                    disabled={progress !== "0%" && progress !== "100.00%"}
+                    className="btn"
+                    onClick={() => { myRef.click() }}>
+                    {progress}
+                </button>
 
-                <button disabled={!title} className="btn" style={{ float: "right", marginTop: "5px" }} onClick={handleSubmit}>Add Book</button >
+                <button
+                    disabled={!title}
+                    className="btn"
+                    style={{ float: "right", marginTop: "5px" }}
+                    onClick={handleSubmit}>
+                    Add Book
+                </button >
             </div>
 
 
