@@ -167,7 +167,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
         })
             .then(
                 (response) => {
-
+                    paramObj.setProgress("File")
                     paramObj.setFile(null);
                     console.log(response.data)
                     //   alert(response.data)

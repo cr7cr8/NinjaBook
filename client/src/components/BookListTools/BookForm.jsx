@@ -16,8 +16,8 @@ const BookForm = (props) => {
 
     const [file, setFile] = useState(null)
 
-    const [progress, setProgress] = useState("0%")
-console.log(progress==="0%")
+    const [progress, setProgress] = useState("File")
+
     const { dispatch } = useContext(BookListContext)
     const { user } = useContext(UserContext)
 
@@ -93,14 +93,14 @@ console.log(progress==="0%")
             <div>
                 <input type="file" style={{ display: "none" }} onChange={handleChange} ref={fileInput => myRef = fileInput} />
                 <button
-                    disabled={progress !== "0%" && progress !== "100.00%"}
+                    disabled={progress !== "File"}
                     className="btn"
                     onClick={() => { myRef.click() }}>
                     {progress}
                 </button>
 
                 <button
-                    disabled={!title}
+                    disabled={!title||progress !== "File"}
                     className="btn"
                     style={{ float: "right", marginTop: "5px" }}
                     onClick={handleSubmit}>
