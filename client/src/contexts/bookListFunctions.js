@@ -23,7 +23,7 @@ function initialize() {
     else {
 
         return [{
-            title: <React.Fragment>Please <Link to="/login" style={{color:"#eee"}} > Login </Link> or <Link to="/register" style={{color:"#eee"}}> Regist </Link>  to use</React.Fragment>,
+            title: <React.Fragment>Please <Link to="/login" style={{ color: "#eee" }} > Login </Link> or <Link to="/register" style={{ color: "#eee" }}> Regist </Link>  to use</React.Fragment>,
             author: Date(), id: Date.now()
         }]
     }
@@ -148,7 +148,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
     else if (type === "uploadFile") {
 
-        
+
 
         const data = new FormData()
         if (paramObj.file) {
@@ -161,6 +161,11 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
             onUploadProgress: progressEvent => {
                 let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
                 paramObj.setProgress((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
+
+                if (((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%") === "100.00%") {
+                    paramObj.setProgress("Processing on server")
+                }
+
                 console.log(percentCompleted)
             },
 
