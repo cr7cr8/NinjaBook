@@ -148,7 +148,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
     else if (type === "uploadFile") {
 
-        setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
+    
 
         const data = new FormData()
         if (paramObj.file) {
@@ -167,6 +167,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
         })
             .then(
                 (response) => {
+                    setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
                     paramObj.setProgress("File")
                     paramObj.setFile(null);
                     console.log(response.data)

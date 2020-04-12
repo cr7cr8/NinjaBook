@@ -102,7 +102,7 @@ router.delete("/deletebook/:id", authenticateToken, (req, res,next) => {
         .then(doc => {
 
             Pic.delete.call(Pic, req, res, next)
-            console.log("deleting")
+         
           
            //     console.log(Boolean(doc.files))
             res.json(doc)
@@ -118,7 +118,7 @@ router.put("/updatebook/:id", authenticateToken, (req, res) => {
 
     BookList.updateOne({ id: req.params.id, owner: req.user.username }, req.body, { new: true })
         .then(doc => {
-            console.log("===============================")
+           // console.log("===============================")
             //    console.log(doc)
             res.json(doc)
         })
