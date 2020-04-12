@@ -19,9 +19,9 @@ body {
   
 }
 
-#root{
+/* #root{
   margin-top: -60px;
-}
+} */
 
 .navbar{
   padding: 10px 20px;
@@ -31,6 +31,7 @@ body {
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   overflow: hidden;
+ 
 }
 .navbar h1{
   margin: 0px 0;
