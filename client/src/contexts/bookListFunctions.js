@@ -148,7 +148,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
     else if (type === "uploadFile") {
 
-    
+     
 
         const data = new FormData()
         if (paramObj.file) {
