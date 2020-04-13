@@ -19,39 +19,50 @@ const BookDetails = ({ book, ...props }) => {
 
     const [goalOpa, setGoalOpa] = useState(1)
     const [goalHeight, setGoalHeight] = useState("auto")
-    return (
-        <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }}  >
+    return (<React.Fragment>
+        <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }} config={{ duration: 300 }} >
 
             {(props) => {
 
 
 
                 return (
-                    <li className={book.finish ? "done" : ""} style={props} >
 
-                        {user.username &&
-                            <BookDelete {...{ setGoalOpa, setGoalHeight, dispatch, book, props }}>
-                                delete
-                            </BookDelete>
-                        }
+                    <li style={props} >
 
-                        <div className={book.finish ? "title done" : "title"} >{book.title}  </div>
-                        <div className={book.finish ? "author done" : "author"} >{book.author} </div>
+                        <div style={{ height: "10px", opacity: "0" }}></div>
 
-                        {book.files && 
+                        <div className={book.finish ? "done" : ""} style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+                            {user.username
+                                ? <BookDelete {...{ setGoalOpa, setGoalHeight, dispatch, book, props }}>  delete  </BookDelete>  
+                                : <div></div>
+                            }
 
-                            <BookDownload
-                                whenClick={(obj) => { dispatch({ type: "downloadFile", id: book.id, obj: obj }) }}
-                                className="btn bar"
-                            >
-                                {book.files[0]}
-                            </BookDownload>
-                        }
 
+                            <div className={book.finish ? "title done" : "title"} style={{ boxShadow: "none" }}    >{book.title}  </div>
+                            <div className={book.finish ? "author done" : "author"} >{book.author} </div>
+
+                            {book.files &&
+
+                                <BookDownload
+                                    whenClick={(obj) => { dispatch({ type: "downloadFile", id: book.id, obj: obj }) }}
+                                    className="btn bar"
+                                >
+                                    {book.files[0]}
+                                </BookDownload>
+                            }
+
+                        </div>
+                        <div style={{ height: "10px", opacity: "0" }}></div>
                     </li>
+
+
                 )
             }}
         </Spring>
+
+
+    </React.Fragment>
     );
 }
 
