@@ -155,9 +155,25 @@ input[type='submit']{
 
   background: #eee;
   border: 0;
+  float: right; 
+  cursor: pointer;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-bottom-left-radius: 4px;
+  box-shadow: 1px 1px 10px 3px  rgb(54, 7, 40);
+  /* display: inline; */
+
+}
+
+.deleteBtn:hover {
+
+  background: #999;
+  border: 0;
   float: right;
   cursor: pointer;
-  border-radius: 4px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-bottom-left-radius: 4px;
   box-shadow: 1px 1px 10px 3px  rgb(54, 7, 40);
 
 }

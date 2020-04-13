@@ -41,8 +41,8 @@ const BookDelete = ({book,dispatch,setGoalOpa,setGoalHeight,...props}) => {
                     }
                 }
 
-                onMouseEnter={(e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through; padding:0 10px" }}
-                onMouseOut={(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;   padding:0 10px" }}
+                onMouseEnter={(e) => { e.currentTarget.parentNode.style = "opacity:0.7;  text-decoration: line-through;  padding-left:10px" }}
+                onMouseOut={(e) => { e.currentTarget.parentNode.style = "opacity:1;  text-decoration: none;  padding-left:10px" }}
 
             >{props.children}</button>
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { BookListContext } from '../contexts/BookListContextProvider'
 import { Route, Switch, Link, } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContextProvider';
@@ -14,7 +14,7 @@ const Navbar = (props) => {
 
   const [btnOn, setBtnOn] = useState(false)
 
-//document.title= user.username || "NinjaBook"
+  document.title = user.username || "NinjaBook"
   return (
 
 
@@ -28,10 +28,10 @@ const Navbar = (props) => {
         <SwitchButton
           checked={btnOn}
           onChange={function () { !btnOn ? dispatchBook({ type: "getBookList" }) : dispatchBook({ type: "cleanFinish" }); setBtnOn(!btnOn) }}
-          
+
           onColor="#6d3d6d"
           offColor="#6d3d6d"
-          
+
           offHandleColor="#eeeeee"
           onHandleColor="#eeeeee"
 
@@ -67,7 +67,7 @@ const Navbar = (props) => {
         logout
         </button>
       }
-      {Boolean(bookList.length) || <p style={{ textAlign: "center" }}>No books to read, Hello free time :)</p> }
+      {Boolean(bookList.length) || <p style={{ textAlign: "center" }}>No books to read, Hello free time :)</p>}
     </React.Fragment>
 
   );

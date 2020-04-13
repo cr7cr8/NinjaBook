@@ -30,16 +30,16 @@ const BookDetails = ({ book, ...props }) => {
 
                     <li style={props} >
 
-                        <div style={{ height: "10px", opacity: "0" }}></div>
+                        <div style={{ height: "5px", opacity: "0" }}></div>
 
-                        <div className={book.finish ? "done" : ""} style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+                        <div className={book.finish ? "done" : ""} style={{ paddingLeft: "10px", paddingRight: "0px" }}>
                             {user.username
                                 ? <BookDelete {...{ setGoalOpa, setGoalHeight, dispatch, book, props }}>  delete  </BookDelete>  
                                 : <div></div>
                             }
 
 
-                            <div className={book.finish ? "title done" : "title"} style={{ boxShadow: "none" }}    >{book.title}  </div>
+                            <span className={book.finish ? "title done" : "title"} style={{ boxShadow: "none" }}    >{book.title}  </span>
                             <div className={book.finish ? "author done" : "author"} >{book.author} </div>
 
                             {book.files &&
@@ -53,7 +53,7 @@ const BookDetails = ({ book, ...props }) => {
                             }
 
                         </div>
-                        <div style={{ height: "10px", opacity: "0" }}></div>
+                        <div style={{ height: "5px", opacity: "0" }}></div>
                     </li>
 
 
