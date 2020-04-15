@@ -19,6 +19,19 @@ const BookDetails = ({ book, ...props }) => {
 
     const [goalOpa, setGoalOpa] = useState(1)
     const [goalHeight, setGoalHeight] = useState("auto")
+    const [picture, setPicture] = useState(null)
+    const [picSize, setPicSize] = useState(20)
+
+    useLayoutEffect(() => {
+        if (book.picture) {
+
+            dispatch({ type: "downloadPic", id: book.id, setPicture })
+        }
+
+
+    }, [])
+
+
     return (<React.Fragment>
         <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }} config={{ duration: 300 }} >
 
@@ -34,12 +47,42 @@ const BookDetails = ({ book, ...props }) => {
 
                         <div className={book.finish ? "done" : ""} style={{ paddingLeft: "10px", paddingRight: "0px" }}>
                             {user.username
-                                ? <BookDelete {...{ setGoalOpa, setGoalHeight, dispatch, book, props }}>  delete  </BookDelete>  
+                                ? <BookDelete {...{ setGoalOpa, setGoalHeight, dispatch, book, props }}>  delete  </BookDelete>
                                 : <div></div>
                             }
 
 
                             <span className={book.finish ? "title done" : "title"} style={{ boxShadow: "none" }}    >{book.title}  </span>
+
+                            {
+                                book.picture
+                                &&
+
+
+
+
+                                <div style={{ paddingRight: "10px"  ,}}>
+
+                                    <Spring from={{ width: "0%" }} to={{ width: picSize+"%"  }} config={{ duration: 200 }} >
+                                      {(props)=>{
+                                          return(
+                                            <img src={picture}  style={{...props,borderRadius: "4px"}} /*style={{ width: picSize ? "100%" : "20%", height: "auto" }}*/
+                                             onClick={function () { 
+                                                picSize===20?  setPicSize(100) :  setPicSize(20) 
+                                              
+                                                
+                                                }} />
+
+                                          )
+                                      }}
+                                      
+
+                                    </Spring>
+                                </div>
+
+                            }
+
+
                             <div className={book.finish ? "author done" : "author"} >{book.author} </div>
 
                             {book.files &&

@@ -5,20 +5,20 @@ mongoose.connection.on('error', function (err) {
     console.log("aaaaaaaaaaaaaaa")
 });
 
-const { connDB, DB, connParam } = {
+const { connDB,connDB2, DB, connParam } = {
 
     DB: "mongodb+srv://boss:ABCabc123@cluster0-iiqnu.azure.mongodb.net/NinjaBook?poolSize=10&retryWrites=true&w=majority",
     connParam: { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,/*poolSize:10*/ },
 
     get connDB() {
+        return mongoose.createConnection(this.DB, this.connParam)
+    },
 
-
+    get connDB2(){
         return mongoose.createConnection(this.DB, this.connParam)
 
-
-
-
     },
+
 
 }
 
@@ -48,6 +48,7 @@ function wrapAndMerge(...args) {
 
 module.exports = {
     connDB: connDB,
+    connDB2:connDB2,
 
     wrapAndMerge,
 }

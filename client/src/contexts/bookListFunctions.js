@@ -110,8 +110,8 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
                 const arr = list.data.map((book) => {
 
-                    // console.log(book)
-                    return { title: book.title, author: book.author, id: book.id, finish: book.finish, files: book.files }
+                    console.log(book)
+                    return { title: book.title, author: book.author, id: book.id, finish: book.finish, files: book.files, picture: book.picture }
                 })
                 setState(arr)
 
@@ -146,9 +146,118 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
             })
     }
 
+    else if (type === "uploadBoth") {
+
+
+
+        const data = new FormData()
+        paramObj.pic.forEach(picture => {
+            data.append('file', picture);
+        })
+        data.append('obj', JSON.stringify(paramObj.book));
+
+        const p1 = axios.post(`${url}/booklist/uploadpic`, data, {
+            headers: { 'content-type': 'multipart/form-data' },
+
+
+            onUploadProgress: progressEvent => {
+                let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                paramObj.setPicProgress((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
+
+                if (((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%") === "100.00%") {
+                    paramObj.setPicProgress("Processing on server")
+                    paramObj.setPic(null);
+                }
+                console.log(percentCompleted)
+            },
+        })
+            .then(
+                (response) => {
+                  //  setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
+                    paramObj.setPicProgress("Picture")
+                }
+            )
+            .catch(err => {
+                console.log(err.response.data)
+                alert(err.response.data)
+            })
+
+
+        const data2 = new FormData()
+        data2.append('file', paramObj.file);
+        data2.append('obj', JSON.stringify(paramObj.book));
+        const p2=  axios.post(`${url}/booklist/upload`, data2, {
+            headers: { 'content-type': 'multipart/form-data' },
+            onUploadProgress: progressEvent => {
+                let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                paramObj.setFileProgress((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
+
+                if (((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%") === "100.00%") {
+                    paramObj.setFileProgress("Processing on server")
+                    paramObj.setFile(null);
+                }
+                console.log(percentCompleted)
+            },
+        })
+            .then(
+                (response) => {
+
+                 //   setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
+                    paramObj.setFileProgress("File")
+                }
+            )
+            .catch(err => {
+                console.log(err.response.data)
+                alert(err.response.data)
+            })
+
+            Promise.all([p1,p2]).then(()=>{
+
+                setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
+
+            }).catch(err=>{console.log(err)
+                alert(err)
+            })
+
+
+    }
+    else if (type === "uploadPic") {
+
+
+        console.log(paramObj.pic)
+        const data = new FormData()
+        paramObj.pic.forEach(picture => {
+            data.append('file', picture);
+        })
+        data.append('obj', JSON.stringify(paramObj.book));
+
+        return axios.post(`${url}/booklist/uploadpic`, data, {
+            headers: { 'content-type': 'multipart/form-data' },
+
+
+            onUploadProgress: progressEvent => {
+                let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                paramObj.setPicProgress((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
+
+                if (((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%") === "100.00%") {
+                    paramObj.setPicProgress("Processing on server")
+                    paramObj.setPic(null);
+                }
+                console.log(percentCompleted)
+            },
+        })
+            .then(
+                (response) => {
+                    setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
+                    paramObj.setPicProgress("Picture")
+                }
+            )
+            .catch(err => {
+                console.log(err.response.data)
+                alert(err.response.data)
+            })
+    }
     else if (type === "uploadFile") {
-
-
 
         const data = new FormData()
         if (paramObj.file) {
@@ -160,22 +269,22 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
             headers: { 'content-type': 'multipart/form-data' },
             onUploadProgress: progressEvent => {
                 let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-                paramObj.setProgress((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
+                paramObj.setFileProgress((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
 
                 if (((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%") === "100.00%") {
-                    paramObj.setProgress("Processing on server")
+                    paramObj.setFileProgress("Processing on server")
+                    paramObj.setFile(null);
                 }
-
                 console.log(percentCompleted)
             },
-
         })
             .then(
                 (response) => {
+
                     setState([...bookList, paramObj.book].sort((a, b) => a.id >= b.id ? -1 : 1))
-                    paramObj.setProgress("File")
-                    paramObj.setFile(null);
-                    console.log(response.data)
+                    paramObj.setFileProgress("File")
+
+                    // console.log(response.data)
                     //   alert(response.data)
                 }
             )
@@ -187,25 +296,19 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
 
     else if (type === "downloadFile") {
 
-
-
         return axios({
             url: `${url}/booklist/download/${String(paramObj.id)}`,
             method: 'GET',
             responseType: 'blob', // important
             onDownloadProgress: progressEvent => {
 
-
-
-                //    let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-                //      console.log(percentCompleted)
+              
                 paramObj.obj((progressEvent.loaded * 100 / progressEvent.total).toFixed(2) + "%")
                 console.log((progressEvent.loaded * 100 / progressEvent.total).toFixed(2))
 
             }
         })
             .then((response) => {
-
 
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
@@ -219,16 +322,39 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
                 alert(err.response.data)
             })
 
-
-
-
-
     }
 
+    else if (type === "downloadPic") {
 
+        console.log(paramObj.id)
 
+        return axios({
+            url: `${url}/booklist/downloadpic/${String(paramObj.id)}`,
+            method: 'GET',
+            responseType: 'arraybuffer', // important
 
+        })
+            .then((response) => {
 
+                const base64 = btoa(
+                    new Uint8Array(response.data).reduce(
+                        (data, byte) => data + String.fromCharCode(byte),
+                        '',
+                    ),
+                );
+                paramObj.setPicture("data:;base64," + base64)
+                //     const url = window.URL.createObjectURL(new Blob([response.data]));
+                //     const link = document.createElement('a');
+                //     link.href = url;
+                //     link.setAttribute('download', decodeURIComponent(response.headers["file-name"]));
+                //     document.body.appendChild(link);
+                //     link.click();
+            }).catch(err => {
+                //     console.log(err.response.data)
+                //     alert(err.response.data)
+            })
+
+    }
     else {
         return bookList
     }

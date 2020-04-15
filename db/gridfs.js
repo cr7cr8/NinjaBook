@@ -1,9 +1,9 @@
 const multer = require("multer");
 const mongoose = require("mongoose");
 const GridFsStorage = require("multer-gridfs-storage");
-const { connDB } = require("./db")
+const { connDB, connDB2 } = require("./db")
 
-const collectionName = "pic_uploads"
+const collectionName = "file_uploads"
 
 function createFileModel({ connDB, collectionName }) {
     const fileSchema = new mongoose.Schema({
@@ -23,23 +23,28 @@ function createFileModel({ connDB, collectionName }) {
             return gridFsDownload.call(this, req, res)
         },
         delete: function (req, res, next) {
-           // return console.log("start delete", req.params.id);
-           return gridFsDelete.call(this, req, res, next)
+            // return console.log("start delete", req.params.id);
+            return gridFsDelete.call(this, req, res, next)
         },
 
         upload: function (req, res, next) {
-            return upload.call(this/*, collectionName*/).fields([{ name: 'file', maxCount: 1 }])(req, res, next)
+            return upload.call(this/*, collectionName*/).fields([{ name: 'file', maxCount: 10 }])(req, res, next)
         },
 
         update: function (req, res, next) {
             return collectionUpdate.call(this, req, res, next)
         },
 
-        // download: function (req, res, next) {
+        getDocIDs:function(req,res,next){
 
-        //     return gridFsDownload.call(this, req, res, next)
-        // }
-
+            if (req.files['file']) {
+                req.files['file'].forEach(file => {
+                    console.log(file.id)
+                
+                })
+            }
+        }
+       
 
     };
     return connDB.model(collectionName, fileSchema)
@@ -154,7 +159,7 @@ function gridFsDownload(req, res, next, /*collectionName*/) {
 
 function gridFsDelete(req, res) {
 
-console.log("gridfFs Deleting")
+    console.log("gridfFs Deleting")
 
     var gfs = new mongoose.mongo.GridFSBucket(this.db.db, {
         chunkSizeBytes: 255 * 1024,
@@ -168,7 +173,7 @@ console.log("gridfFs Deleting")
 
             if (err) { console.log(err) }
             else {
-               console.log("file deleted")
+                console.log("file deleted")
                 // res.send(pic._id)
             }
 
@@ -179,42 +184,47 @@ console.log("gridfFs Deleting")
 
 function collectionUpdate(req, res, next, /*collectionName*/) {
 
-
-
     if (req.files['file']) {
-
         req.files['file'].forEach(file => {
-
             this.db.db.collection(this.schema.options.collection + ".files").update(
                 { _id: file.id },
                 { $set: { "metadata": { ...JSON.parse(req.body.obj), "owner": req.user.username } } },
                 (err, result) => {
 
                     if (err) {
-                        res.status(500).json(" cannot add metadata to the file")
+                      return  res.status(500).json(" cannot add metadata to the file")
                     }
                     else {
 
-                        console.log(this.schema.options.collection)
+                      //  console.log(this.schema.options.collection)
                         next()
                     }
                 }
             )
         })
-
-
     }
     else {
         next()
     }
+}
 
-
+function getDocIDs_(req,res,next){
+    if (req.files['file']) {
+        req.files['file'].forEach(file => {
+            console.log(file)
+        
+        })
+    }
 
 
 }
 
 
 
-module.exports = createFileModel({ connDB, collectionName })
 
 
+
+module.exports = {
+    FileUpload: createFileModel({ connDB, collectionName }),
+    PicUpload: createFileModel({ connDB: connDB2, collectionName: "pic_uploads" })
+}

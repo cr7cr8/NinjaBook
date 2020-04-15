@@ -93,7 +93,7 @@ input[type='text'], input[type='password'], textarea{
   padding: 10px;
   box-sizing: border-box;
   margin-bottom:20px;
-  
+
 
   background: #3c1f3c;
   color: #fff;
@@ -129,7 +129,7 @@ input[type='submit']{
   display: block;
   border-radius: 4px;
   box-shadow: 1px 1px 10px 3px  rgb(54, 7, 40);
- 
+  margin-right: 10px;
   display: inline-block;
   cursor: pointer;
 

@@ -40,7 +40,8 @@ const bookListSchema = new mongoose.Schema(
         owner: { type: String },
         id: { type: Number },
         finish: { type: Boolean, default: false },
-        files:{type:Object,default:null}
+        files:{type:Object,default:null},
+        picture:{type:Boolean,default:false}
 
     },
     {

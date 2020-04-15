@@ -15,13 +15,20 @@ const BookForm = (props) => {
     const [author, setAuthor] = useState("")
 
     const [file, setFile] = useState(null)
+    const [pic, setPic] = useState(null)
 
-    const [progress, setProgress] = useState("File")
+
+    const [fileProgress, setFileProgress] = useState("File")
+    const [picProgress, setPicProgress] = useState("Picture")
+
+
 
     const { dispatch } = useContext(BookListContext)
     const { user } = useContext(UserContext)
 
     let myRef = createRef()
+
+    let picRef;
 
 
 
@@ -33,9 +40,17 @@ const BookForm = (props) => {
 
 
 
-        // dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
+        !file && !pic && dispatch({ type: "addBook", book: { title, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
 
-        dispatch({ type: "uploadFile", setProgress, setFile, file: file, book: { title, files: file ? [file.name] : null, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
+        file && !pic && dispatch({ type: "uploadFile", setFileProgress, setFile, file, pic, book: { title, files: [file.name], author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
+
+        !file && pic && dispatch({ type: "uploadPic", setPicProgress, setPic, pic, book: { title, picture: true, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
+        
+        file && pic &&
+
+            dispatch({ type: "uploadBoth", setFileProgress,setPicProgress, setFile, setPic, file, pic, book: { title, picture:true,files: [file.name], author: author || Date().substr(0, 24), id:Date.now(), finish: false } })
+
+
 
         setTitle("")
         setAuthor("")
@@ -43,27 +58,39 @@ const BookForm = (props) => {
 
     const handleChange = (e) => {
         e.preventDefault();
-
         console.log(e.currentTarget.files[0])
-
+        if (!e.currentTarget.files[0]) {
+            return setFile(null)
+        }
 
         setTitle((title + " " + e.currentTarget.files[0].name).trim())
-
-
         e.currentTarget.files[0]
             ? setFile(e.currentTarget.files[0])
             : setFile(null)
 
+    }
 
+    const picChange = (e) => {
+        e.preventDefault();
+        console.log(e.currentTarget.files)
+        if (!e.currentTarget.files[0]) {
+            return setPic(null)
+        }
 
+        const picArr = [];
+        for (let i = 0; i < e.currentTarget.files.length; i++) {
+            picArr.push(e.currentTarget.files[i])
+            // break;
 
-        //  console.log(URL.createObjectURL(e.currentTarget.files[0]))
+        }
 
-        // dispatch({ type: "uploadFile", file: e.currentTarget.files[0], book: { title, author: author || Date().substr(0, 24), id: Date.now(), finish: false } })
+        //setTitle((title + " " + e.currentTarget.files[0].name).trim())
+        e.currentTarget.files
+            ? setPic(picArr)
+            : setPic(null)
 
 
     }
-
 
 
     //{!user.username &&<button>  <Link to="/login" >login  </Link></button>}
@@ -71,9 +98,6 @@ const BookForm = (props) => {
 
         // user.username&& <React.Fragment>
         <React.Fragment>
-
-
-
             <TextareaAutosize value={title}
 
                 placeholder="title"
@@ -86,21 +110,40 @@ const BookForm = (props) => {
             ></TextareaAutosize>
             <input placeholder={Date().substr(0, 24)} type="text" value={author} onChange={(e) => { setAuthor(e.currentTarget.value) }} ></input>
 
+            {
+                pic && pic.map((picture, index) => {
+                    return <img key={index} src={picture ? URL.createObjectURL(picture) : ""} style={{ opacity: 1.0, width: 200, height: "auto" }}></img>
+                })
+            }
 
+            {file && <div>{file.name}</div>}
 
-            {file && <img src={file ? URL.createObjectURL(file) : ""} style={{ opacity: 1.0, width: 200, height: 100 }}></img>}
 
             <div>
-                <input type="file" style={{ display: "none" }} onChange={handleChange} ref={fileInput => myRef = fileInput} />
+
+                <input type="file" multiple style={{ display: "none" }} accept="image/x-png,image/gif,image/jpeg" onChange={picChange} ref={fileInput => picRef = fileInput} />
                 <button
-                    disabled={progress !== "File"}
+                    disabled={fileProgress !== "File"||picProgress!=="Picture"}
                     className="btn"
-                    onClick={() => { myRef.click() }}>
-                    {progress}
+                    onClick={() => { picRef.click() }}>
+                    {picProgress}
                 </button>
 
+
+                <input type="file" style={{ display: "none" }} onChange={handleChange} ref={fileInput => myRef = fileInput} />
                 <button
-                    disabled={!title||progress !== "File"}
+                    disabled={fileProgress !== "File"||picProgress!=="Picture"}
+                    className="btn"
+                    onClick={() => { myRef.click() }}>
+                    {fileProgress}
+                </button>
+
+
+
+
+
+                <button
+                    disabled={!title || fileProgress !== "File"}
                     className="btn"
                     style={{ float: "right", marginTop: "5px" }}
                     onClick={handleSubmit}>
