@@ -33,7 +33,7 @@ const BookDetails = ({ book, ...props }) => {
 
 
     return (<React.Fragment>
-        <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }} config={{ duration: 300 }} >
+        <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }} config={{ delay:0,duration: 200 ,friction: 10}} >
 
             {(props) => {
 
@@ -58,12 +58,9 @@ const BookDetails = ({ book, ...props }) => {
                                 book.picture
                                 &&
 
-
-
-
                                 <div style={{ paddingRight: "10px"  ,}}>
 
-                                    <Spring from={{ width: "0%" }} to={{ width: picSize+"%"  }} config={{ duration: 200 }} >
+                                    <Spring from={{ opacity:0,width: "0%" }} to={{ opacity:1,width: picSize+"%"  }} config={{ duration: 200 }} >
                                       {(props)=>{
                                           return(
                                             <img src={picture}  style={{...props,borderRadius: "4px"}} /*style={{ width: picSize ? "100%" : "20%", height: "auto" }}*/

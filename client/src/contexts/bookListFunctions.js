@@ -342,7 +342,7 @@ export const bookListFunctions = (bookList, setState, { type = "", ...paramObj }
                         '',
                     ),
                 );
-                paramObj.setPicture("data:;base64," + base64)
+                paramObj.setPicture("data:"+response.headers["content-type"]+";base64," + base64)
                 //     const url = window.URL.createObjectURL(new Blob([response.data]));
                 //     const link = document.createElement('a');
                 //     link.href = url;
