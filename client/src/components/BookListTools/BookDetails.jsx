@@ -21,11 +21,12 @@ const BookDetails = ({ book, ...props }) => {
     const [goalHeight, setGoalHeight] = useState("auto")
     const [picture, setPicture] = useState(null)
     const [picSize, setPicSize] = useState(20)
+    const [picName, setPicName] = useState(null)
 
     useLayoutEffect(() => {
         if (book.picture) {
 
-            dispatch({ type: "downloadPic", id: book.id, setPicture })
+            dispatch({ type: "downloadPic", id: book.id, setPicture,setPicName })
         }
 
 
@@ -33,7 +34,7 @@ const BookDetails = ({ book, ...props }) => {
 
 
     return (<React.Fragment>
-        <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }} config={{ delay:0,duration: 200 ,friction: 10}} >
+        <Spring from={{ opacity: 0, height: 0 }} to={{ opacity: goalOpa, height: goalHeight }} config={{ delay: 0, duration: 200, friction: 10 }} >
 
             {(props) => {
 
@@ -58,21 +59,24 @@ const BookDetails = ({ book, ...props }) => {
                                 book.picture
                                 &&
 
-                                <div style={{ paddingRight: "10px"  ,}}>
+                                <div style={{ paddingRight: "10px", }}>
 
-                                    <Spring from={{ opacity:0,width: "0%" }} to={{ opacity:1,width: picSize+"%"  }} config={{ duration: 200 }} >
-                                      {(props)=>{
-                                          return(
-                                            <img src={picture}  style={{...props,borderRadius: "4px"}} /*style={{ width: picSize ? "100%" : "20%", height: "auto" }}*/
-                                             onClick={function () { 
-                                                picSize===20?  setPicSize(100) :  setPicSize(20) 
-                                              
-                                                
-                                                }} />
+                                    <Spring from={{ opacity: 0, width: "0%" }} to={{ opacity: 1, width: picSize + "%" }} config={{ duration: 200 }} >
+                                        {(props) => {
+                                            return (
 
-                                          )
-                                      }}
-                                      
+                                                <a href={picture} download={picName} style={{cursor:"default"}}>
+                                                    <img src={picture} style={{ ...props, borderRadius: "4px" }} /*style={{ width: picSize ? "100%" : "20%", height: "auto" }}*/
+                                                        onClick={function (e) {
+                                                            e.preventDefault()
+                                                            picSize === 20 ? setPicSize(100) : setPicSize(20)
+
+
+                                                        }} />
+                                                </a>
+                                            )
+                                        }}
+
 
                                     </Spring>
                                 </div>
